@@ -99,7 +99,7 @@ function Home({ navigation }) {
         </View>
 
         <View style={styles.imageContainer2}>
-          <TouchableOpacity onPress={() => navigation.navigate("HIV/AIDS")}>
+          <TouchableOpacity onPress={() => navigation.navigate("HivAids")}>
             <Image
               source={require("./assets/images/hiv.jpg")}
               style={styles.diseaseImage}
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 20, 
   },
 
   Mostbutton: {
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     left: 30,
     top: 250,
     width: 277,
-    height: 61,
+    height: 70,
     backgroundColor: "rgba(255, 255, 255, 0.25)",
     borderRadius: 15,
     justifyContent: "center",

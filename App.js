@@ -5,6 +5,8 @@ import Login from "./components/LoginScreen";
 import Home from "./components/HomeScreen";
 import Account from "./components/AccountScreen";
 import Tuberculosis from "./components/TuberculosisScreen";
+import HivAids from "./components/Hiv&Aids";
+import Aboutus from "./components/AboutusScreen..js";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +33,18 @@ export default function App() {
         <Stack.Screen
           name="Tuberculosis"
           component={Tuberculosis}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="HivAids"
+          component={HivAids}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Aboutus"
+          component={Aboutus}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

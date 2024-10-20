@@ -69,7 +69,7 @@ function Account({ navigation }) {
           <Text style={styles.settingText}>Group</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem} onPress={() => {}}>
+        <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate("Aboutus")}>
           <Image
             source={require("./assets/icons/about.png")}
             style={styles.aboutIcon}
