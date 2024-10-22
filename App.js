@@ -1,10 +1,10 @@
+// App.js
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/LoginScreen";
-import Home from "./components/HomeScreen";
+import Home from "./components/HomeScreen"; // Ensure this points to the updated Home component
 import Account from "./components/AccountScreen.js";
-import Heart from "./components/Heart.js";
 
 
 const Stack = createNativeStackNavigator();
@@ -28,11 +28,7 @@ export default function App() {
           component={Home}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
-          name="Heart"
-          component={Heart}
-          options={{ headerShown: false }}
-        />
+
         <Stack.Screen
           name="Account"
           component={Account}

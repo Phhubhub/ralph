@@ -19,11 +19,13 @@ function BottomNav({ currentScreen, navigation }) {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.navItem}>
+      <TouchableOpacity
+        style={styles.navItem}
+         // Move onPress here
+      >
         <Image
           source={require("./assets/icons/heart.png")}
           onPress={() => navigation.navigate("Heart")}
-
           style={[
             styles.icon,
             currentScreen === "Heart"
@@ -32,6 +34,7 @@ function BottomNav({ currentScreen, navigation }) {
           ]}
         />
       </TouchableOpacity>
+
       <TouchableOpacity
         style={styles.navItem}
         onPress={() => navigation.navigate("Account")}
