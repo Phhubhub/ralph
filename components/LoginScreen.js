@@ -27,17 +27,17 @@ function Login({ navigation }) {
       />
       <Text style={styles.wew}>Login Details</Text>
       <TextInput //username
-        style={[styles.input, { width: 250, height: 40, borderColor: '#635C5C', borderWidth: 1, borderRadius: 20 }]}
+        style={[styles.input, { width: 250, height: 50, borderColor: '#887E7E', borderWidth: 1, borderRadius: 20 }]}
         placeholder="Username"
-        placeholderTextColor="#635C5C"
+        placeholderTextColor="#887E7E"
         value={username}
         onChangeText={(text) => setUsername(text)}
       />
       <TextInput //password
-        style={[styles.input, { width: 250, height: 40, borderColor: '#635C5C', borderWidth: 1, borderRadius: 20 }]}
+        style={[styles.input, { width: 250, height: 50, borderColor: '#887E7E', borderWidth: 1, borderRadius: 20 }]}
         placeholder="Password"
         secureTextEntry={true}
-        placeholderTextColor="#635C5C"
+        placeholderTextColor="#887E7E"
         value={password}
         onChangeText={(text) => setPassword(text)}
       />           
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   input: {
     color: '#635C5C',
-    marginBottom: 10,
+    marginBottom: 20,
     paddingLeft: 20,
   },
   button: {

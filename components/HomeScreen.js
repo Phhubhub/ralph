@@ -63,7 +63,7 @@ function Home({ navigation }) {
           <TouchableOpacity onPress={() => navigation.navigate("HivAids")}>
             <Image
               source={require("./assets/images/join.png")}
-              style={styles.diseaseImage6}
+              style={styles.diseaseImage}
             />
           </TouchableOpacity>
         </View>
@@ -249,7 +249,11 @@ const styles = StyleSheet.create({
     marginLeft: 13,
     height: 1650,
   },
-
+   diseaseImage: {
+   width: 340,
+   left: 10,
+   borderRadius: 40,  
+   },
   diseaseImage1: {
     position: "absolute",
     width: 335,

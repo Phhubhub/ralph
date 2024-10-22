@@ -18,20 +18,12 @@ function BottomNav({ currentScreen, navigation }) {
           ]}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem}>
-        <Image
-          source={require("./assets/icons/clock.png")}
-          style={[
-            styles.icon,
-            currentScreen === "clock"
-              ? { tintColor: "#FFFFFF" }
-              : { tintColor: "rgba(255, 255, 255, 0.4)" },
-          ]}
-        />
-      </TouchableOpacity>
+
       <TouchableOpacity style={styles.navItem}>
         <Image
           source={require("./assets/icons/heart.png")}
+          onPress={() => navigation.navigate("Heart")}
+
           style={[
             styles.icon,
             currentScreen === "Heart"
