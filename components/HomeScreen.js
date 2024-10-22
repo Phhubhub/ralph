@@ -12,8 +12,10 @@ import {
 import loadFonts from "./fonts";
 import BottomNav from "./bottomNav";
 
+
 function Home({ navigation }) {
   const fontsLoaded = loadFonts();
+  
 
   if (!fontsLoaded) {
     return null;
@@ -33,10 +35,11 @@ function Home({ navigation }) {
       </View>
 
       <View style={styles.popularContainer}>
-        <Text style={styles.popularText}>View Topics</Text>
+        <Text style={styles.popularText}>Want Latest Topics?</Text>
         <TouchableOpacity onPress={() => {}}>
           <Text style={styles.viewAll}>View All</Text>
         </TouchableOpacity>
+
       </View>
 
       <View style={styles.ButtonContainer}>
@@ -60,7 +63,7 @@ function Home({ navigation }) {
         showsVerticalScrollIndicator={false}>
         
         <View style={styles.imageContainer4}>
-          <TouchableOpacity onPress={() => navigation.navigate("HivAids")}>
+          <TouchableOpacity >
             <Image
               source={require("./assets/images/join.png")}
               style={styles.diseaseImage}
@@ -70,7 +73,7 @@ function Home({ navigation }) {
 
 
         <View style={styles.imageContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("Tuberculosis")}>
+          <TouchableOpacity >
             <Image
               source={require("./assets/images/categories.png")}
               style={styles.diseaseImage1}
@@ -79,7 +82,7 @@ function Home({ navigation }) {
         </View>
 
         <View style={styles.imageContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("Tuberculosis")}>
+          <TouchableOpacity >
             <Image
               source={require("./assets/images/readbooks.png")}
               style={styles.diseaseImage2}
@@ -175,7 +178,7 @@ const styles = StyleSheet.create({
   },
 
   popularText: {
-    fontSize: 20,
+    fontSize: 17,
     color: "#FFFFFF",
     fontFamily: "Poppins-SemiBold",
   },
@@ -184,6 +187,7 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 0.5)",
     fontFamily: "Poppins-SemiBold",
     fontSize: 16,
+    right: 5,
   },
 
   ButtonContainer: {

@@ -49,6 +49,7 @@ function Account({ navigation }) {
             To educate the younger generation and foster a deep appreciation for
             the rich heritage of the Philippines.
           </Text>
+          <Text style={styles.meet}>Meet Our Team</Text>
         </View>
          {/*members at details nila*/}
         <View style={styles.view1}>
@@ -57,13 +58,40 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/rap.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}>GAGANTE RALPH : UI DESIGN - , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
          </View>
          </View>
          <View style={styles.view1}>
         <View style={styles.wow}>
         {/* Image on the left */}
-        <Image source={require('./assets/images/rap.png')} style={styles.image} />
+        <Image source={require('./assets/images/telen.png')} style={styles.image} />
+
+        {/* Text on the right */}
+        <Text style={styles.text}>RAYZEL TELEN : EX DESIGN & PERSONA -, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+         </View>
+         </View>
+         <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/peabo.png')} style={styles.image} />
+
+        {/* Text on the right */}
+        <Text style={styles.text}>PEABO SANTIAGO : SPACING -, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+         </View>
+         </View>
+         <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/lim.png')} style={styles.image} />
+
+        {/* Text on the right */}
+        <Text style={styles.text}>RUSSEL LIM : COLOR THEORY & 60 30 10 Rule - In our Araling Panlipunan project, my focus is on color theory and the 60-30-10 rule. I chose a brown color palette to reflect the theme. The dominant color will cover 60% of the design, such as the background. The secondary color will make up 30%, used for elements like navigation menus and sidebars. Lastly, the accent color will account for 10%, highlighting important elements like buttons, icons, or links.</Text>
+         </View>
+         </View>
+         <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/panganiban.png')} style={styles.image} />
 
         {/* Text on the right */}
         <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
@@ -72,34 +100,7 @@ function Account({ navigation }) {
          <View style={styles.view1}>
         <View style={styles.wow}>
         {/* Image on the left */}
-        <Image source={require('./assets/images/rap.png')} style={styles.image} />
-
-        {/* Text on the right */}
-        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
-         </View>
-         </View>
-         <View style={styles.view1}>
-        <View style={styles.wow}>
-        {/* Image on the left */}
-        <Image source={require('./assets/images/rap.png')} style={styles.image} />
-
-        {/* Text on the right */}
-        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
-         </View>
-         </View>
-         <View style={styles.view1}>
-        <View style={styles.wow}>
-        {/* Image on the left */}
-        <Image source={require('./assets/images/rap.png')} style={styles.image} />
-
-        {/* Text on the right */}
-        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
-         </View>
-         </View>
-         <View style={styles.view1}>
-        <View style={styles.wow}>
-        {/* Image on the left */}
-        <Image source={require('./assets/images/rap.png')} style={styles.image} />
+        <Image source={require('./assets/images/malana.png')} style={styles.image} />
 
         {/* Text on the right */}
         <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
@@ -189,6 +190,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     lineHeight: 24,
   },
+  meet: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    left: 110,
+    top: 40,
+  },
   subheading: {
     fontSize: 18,
     fontWeight: "bold",
@@ -233,6 +241,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center', // Center content vertically (optional)
     alignItems: 'center',      // Center content horizontally (optional)
     padding: 20,
+    top: 20,
+    borderColor: '#A4A4A4',
+    borderWidth: 1,
+    borderRadius: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    marginTop: 20,
   },
   wow: {
     flexDirection: 'row',     
