@@ -23,36 +23,17 @@ function Home({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Disease Insight</Text>
+          <Text style={styles.title}>Araling Panlipunan Mobile</Text>
           <Image
-            source={require("./assets/icons/caduceus.png")}
+            source={require("./assets/icons/books.png")}
             style={styles.caduceusIcon}
           />
         </View>
 
-        <View style={styles.searchContainer}>
-          <TouchableOpacity style={styles.iconContainer}>
-            <Image
-              source={require("./assets/icons/search.png")}
-              style={styles.searchIcon}
-            />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search Diseases"
-            placeholderTextColor="rgba(255, 255, 255, 0.5)"
-          />
-          <TouchableOpacity style={styles.iconContainer}>
-            <Image
-              source={require("./assets/icons/settings.png")}
-              style={styles.settingsIcon}
-            />
-          </TouchableOpacity>
-        </View>
       </View>
 
       <View style={styles.popularContainer}>
-        <Text style={styles.popularText}>Popular search</Text>
+        <Text style={styles.popularText}>View Topics</Text>
         <TouchableOpacity onPress={() => {}}>
           <Text style={styles.viewAll}>View All</Text>
         </TouchableOpacity>
@@ -67,59 +48,46 @@ function Home({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity style={styles.OldButton}>
           <Text style={styles.buttonText}>Old</Text>
+
+          
         </TouchableOpacity>
       </View>
 
       <ScrollView
+
         style={styles.scrollContainer}
         contentContainerStyle={styles.scroll}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
+        
+        <View style={styles.imageContainer4}>
+          <TouchableOpacity onPress={() => navigation.navigate("HivAids")}>
+            <Image
+              source={require("./assets/images/join.png")}
+              style={styles.diseaseImage6}
+            />
+          </TouchableOpacity>
+        </View>
+
+
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={() => navigation.navigate("Tuberculosis")}>
             <Image
-              source={require("./assets/images/tuberculosis.jpg")}
-              style={styles.diseaseImage}
+              source={require("./assets/images/categories.png")}
+              style={styles.diseaseImage1}
             />
           </TouchableOpacity>
-          <View style={styles.textContainer}>
-            <Text style={styles.diseaseName}>Tuberculosis (TB)</Text>
-            <View style={styles.doctorContainer}>
-              <Image
-                source={require("./assets/icons/scientist.png")}
-                style={styles.doctorIcon}
-              />
-              <Text style={styles.doctorName}>Dr. Mario Raviglione</Text>
-            </View>
-          </View>
-          <Image
-            source={require("./assets/icons/heart.png")}
-            style={styles.HeartIcon}
-          />
         </View>
 
-        <View style={styles.imageContainer2}>
-          <TouchableOpacity onPress={() => navigation.navigate("HivAids")}>
+        <View style={styles.imageContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate("Tuberculosis")}>
             <Image
-              source={require("./assets/images/hiv.jpg")}
-              style={styles.diseaseImage}
+              source={require("./assets/images/readbooks.png")}
+              style={styles.diseaseImage2}
             />
           </TouchableOpacity>
-          <View style={styles.textContainer}>
-            <Text style={styles.diseaseName}>HIV/AIDS</Text>
-            <View style={styles.doctorContainer}>
-              <Image
-                source={require("./assets/icons/scientist.png")}
-                style={styles.doctorIcon}
-              />
-              <Text style={styles.doctorName}>Dr. Anthony Fauci</Text>
-            </View>
-          </View>
-          <Image
-            source={require("./assets/icons/heart.png")}
-            style={styles.heartIcon}
-          />
+
         </View>
+
       </ScrollView>
       <BottomNav navigation={navigation} currentScreen="Home" />
     </SafeAreaView>
@@ -129,7 +97,7 @@ function Home({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#136D7D",
+    backgroundColor: "#F5F5D6",
   },
 
   headerContainer: {
@@ -143,17 +111,20 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 30,
-    color: "#FFFFFF",
+    fontSize: 25,
+    color: "#95725A",
     fontFamily: "Poppins-Bold",
-    marginLeft: 20,
+    marginLeft: 30,
+    marginTop: 5,
+    right: 10,
+   
   },
 
   caduceusIcon: {
-    width: 35,
-    height: 35,
-    marginLeft: 10,
-    tintColor: "#FFFFFF",
+    width: 20,
+    height: 20,
+    marginRight: 5,
+    
   },
 
   searchContainer: {
@@ -193,11 +164,14 @@ const styles = StyleSheet.create({
 
   popularContainer: {
     padding: 16,
-    backgroundColor: "#136D7D",
+    backgroundColor: "#95725A",
     marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    borderRadius: 30,
+    marginRight: 15,
+    marginLeft: 15,
   },
 
   popularText: {
@@ -223,8 +197,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
-    backgroundColor: "#000000",
+    backgroundColor: "#95725A",
     marginHorizontal: 15,
+    left: 5,
   },
 
   MostText: {
@@ -234,7 +209,7 @@ const styles = StyleSheet.create({
   },
 
   Latestbutton: {
-    backgroundColor: "rgba(0, 0, 0, 0.49)",
+    backgroundColor: "#CFB291",
     borderRadius: 30,
     marginHorizontal: 15,
     paddingVertical: 10,
@@ -242,7 +217,7 @@ const styles = StyleSheet.create({
   },
 
   OldButton: {
-    backgroundColor: "rgba(0, 0, 0, 0.49)",
+    backgroundColor: "#CFB291",
     borderRadius: 30,
     marginHorizontal: 15,
     paddingVertical: 10,
@@ -257,10 +232,12 @@ const styles = StyleSheet.create({
 
   scrollContainer: {
     maxHeight: 500,
+    height: 200,
   },
 
   scroll: {
     paddingBottom: 350,
+    height: 2300,
   },
 
   imageContainer: {
@@ -270,13 +247,31 @@ const styles = StyleSheet.create({
     position: "relative",
     marginTop: 10,
     marginLeft: 13,
+    height: 1650,
   },
 
-  diseaseImage: {
+  diseaseImage1: {
     position: "absolute",
     width: 335,
     height: 324,
     borderRadius: 30,
+    height: 1650,
+    resizeMode: "contain",
+    bottom: 300,  
+    left: 13,  
+    borderRadius: 30,
+  },
+  diseaseImage2: {
+    position: "absolute",
+    width: 335,
+    height: 324,
+    borderRadius: 30,
+    height: 1650,
+    resizeMode: "contain",
+    bottom: 300,  
+    left: 13,  
+    borderRadius: 30,
+    bottom: 900,
   },
 
   textContainer: {

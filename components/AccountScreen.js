@@ -20,187 +20,238 @@ function Account({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.Container}>
-      <View style={styles.Header}></View>
-      <View style={styles.profilecontainer}>
-        <Image
-          source={require("./assets/images/profile.jpg")}
-          style={styles.profileImage}
-        />
-        <Text style={styles.username}>Elowen Hart</Text>
-        <Text style={styles.email}>@hart_elowen</Text>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scroll}>
+        {/* Header Section */}
+        <View style={styles.header}>
+          <Image source={require("./assets/images/AP.png")} style={styles.logo} />
+          <Text style={styles.appName}>Araling Panlipunan</Text>
+        </View>
 
-      <View style={styles.editbutton}>
-        <Text style={styles.buttonText}>Edit</Text>
-      </View>
-      <View style={styles.line} />
+        {/* About Us Content */}
+        <View style={styles.content}>
+          <Text style={styles.heading}>About Us</Text>
+          <Text style={styles.description}>
+            Araling Panlipunan is an educational app designed to teach kids about
+            Philippine history and culture through interactive e-books and modules.
+            Our goal is to make learning fun, engaging, and accessible for everyone.
+          </Text>
 
-      <View style={styles.settingsContainer}>
-        <TouchableOpacity style={styles.settingItem} onPress={() => {}}>
-          <Image
-            source={require("./assets/icons/gear.png")}
-            style={styles.gearIcon}
-          />
-          <Text style={styles.settingText}>Settings</Text>
-        </TouchableOpacity>
+          {/* Mission and Vision Section */}
+          <Text style={styles.subheading}>Our Mission</Text>
+          <Text style={styles.description}>
+            To create a platform where students can learn about Philippine history
+            and culture in an interactive way.
+          </Text>
 
-        <TouchableOpacity style={styles.settingItem} onPress={() => {}}>
-          <Image
-            source={require("./assets/icons/share.png")}
-            style={styles.shareIcon}
-          />
-          <Text style={styles.settingText}>Share</Text>
-        </TouchableOpacity>
+          <Text style={styles.subheading}>Our Vision</Text>
+          <Text style={styles.description}>
+            To educate the younger generation and foster a deep appreciation for
+            the rich heritage of the Philippines.
+          </Text>
+        </View>
+         {/*members at details nila*/}
+        <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/rap.png')} style={styles.image} />
 
-        <TouchableOpacity style={styles.settingItem} onPress={() => {}}>
-          <Image
-            source={require("./assets/icons/support.png")}
-            style={styles.supportIcon}
-          />
-          <Text style={styles.settingText}>Support</Text>
-        </TouchableOpacity>
+        {/* Text on the right */}
+        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+         </View>
+         </View>
+         <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/rap.png')} style={styles.image} />
 
-        <TouchableOpacity style={styles.settingItem} onPress={() => {}}>
-          <Image
-            source={require("./assets/icons/group.png")}
-            style={styles.groupIcon}
-          />
-          <Text style={styles.settingText}>Group</Text>
-        </TouchableOpacity>
+        {/* Text on the right */}
+        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+         </View>
+         </View>
+         <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/rap.png')} style={styles.image} />
 
-        <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate("Aboutus")}>
-          <Image
-            source={require("./assets/icons/about.png")}
-            style={styles.aboutIcon}
-          />
-          <Text style={styles.settingText}>About Us</Text>
-        </TouchableOpacity>
-      </View>
-      <BottomNav navigation={navigation} currentScreen="Account" />
-    </SafeAreaView>
+        {/* Text on the right */}
+        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+         </View>
+         </View>
+         <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/rap.png')} style={styles.image} />
+
+        {/* Text on the right */}
+        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+         </View>
+         </View>
+         <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/rap.png')} style={styles.image} />
+
+        {/* Text on the right */}
+        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+         </View>
+         </View>
+         <View style={styles.view1}>
+        <View style={styles.wow}>
+        {/* Image on the left */}
+        <Image source={require('./assets/images/rap.png')} style={styles.image} />
+
+        {/* Text on the right */}
+        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+         </View>
+         </View>
+         
+
+        {/* Social Media Links */}
+        <View style={styles.socialMedia}>
+          <Text style={styles.socialHeading}>Follow Us Via</Text>
+          <View style={styles.socialIcons}>
+            {/* Social media icons/buttons */}
+            
+      <TouchableOpacity>
+        <Image source={require("./assets/icons/facebook.png")} style={styles.icon} />
+          </TouchableOpacity>
+            <TouchableOpacity>
+              <Image source={require("./assets/icons/google.png")} style={styles.icon} />
+               </TouchableOpacity>
+               <TouchableOpacity>
+              <Image source={require("./assets/icons/apple.png")} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Contact Information */}
+        <View style={styles.contact}>
+          
+          <Text style={styles.contactInfo}>Email: support@aralingpanlipunan.com</Text>
+         </View>
+      </ScrollView>
+      <BottomNav navigation={navigation} />
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  Container: {
+  container: {
     flex: 1,
-    backgroundColor: "#136D7D",
+    padding: 20,
+    backgroundColor: "#F5F5D6",
   },
-
-  Header: {
-    position: "relative",
-    width: "100%",
-    paddingHorizontal: 10,
-    paddingTop: 10,
-    alignItems: "flex-start",
-  },
-
-  profilecontainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 150,
-    top: 50,
-  },
-
-  username: {
-    textAlign: "center",
-    top: 65,
-    width: 131,
-    fontFamily: "Poppins-Medium",
-    fontSize: 22,
-    lineHeight: 28,
-    color: "#FFFFFF",
-  },
-
-  email: {
-    textAlign: "center",
-    top: 70,
-    width: 90,
-    fontFamily: "Poppins-Regular",
-    fontSize: 14,
-    lineHeight: 20,
-    color: "rgba(255, 255, 255, 0.7)",
-  },
-
-  editbutton: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 290,
-    height: 40,
-    backgroundColor: "#000000",
-    borderRadius: 8,
-    top: 90,
-    left: 35,
-  },
-
-  buttonText: {
-    color: "#FFFFFF",
-  },
-
-  line: {
-    height: 2,
-    backgroundColor: "#000000",
-    width: "100%",
-    marginTop: 140,
-  },
-
-  settingsContainer: {
-    width: "100%",
-    paddingHorizontal: 20,
-    marginTop: 35,
-  },
-
-  settingItem: {
+  item2: {
     flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  scroll: {
+    flex: 1,
+  },
+  parentbox: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 15,
+    marginBottom: 20,
   },
-
-  gearIcon: {
-    width: 20,
-    height: 20,
-    tintColor: "#FFFFFF",
-    marginRight: 15,
+  header: {
+    alignItems: "center",
+    marginBottom: 20,
   },
-
-  shareIcon: {
-    width: 24,
-    height: 23,
-    tintColor: "#FFFFFF",
-    marginRight: 15,
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginTop: 20,
+    borderWidth: 6,
+    borderColor: "#95725A",
+    
   },
-
-  supportIcon: {
-    width: 23,
-    height: 23,
-    tintColor: "#FFFFFF",
-    marginRight: 15,
+  appName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    marginTop: 10,
   },
-
-  groupIcon: {
-    width: 23,
-    height: 23,
-    tintColor: "#FFFFFF",
-    marginRight: 15,
+  content: {
+    marginBottom: 20,
   },
-
-  aboutIcon: {
-    width: 23,
-    height: 23,
-    tintColor: "#FFFFFF",
-    marginRight: 15,
+  heading: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#333",
   },
-
-  settingText: {
-    color: "#FFFFFF",
-    fontFamily: "Poppins-Regular",
+  description: {
     fontSize: 16,
+    color: "#555",
+    marginTop: 10,
+    lineHeight: 24,
+  },
+  subheading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#444",
+    marginTop: 20,
+  },
+  socialMedia: {
+    marginBottom: 30,
+    alignItems: "center",
+  },
+  socialHeading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  socialIcons: {
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  icon: {
+    width: 40,
+    height: 40,
+    marginHorizontal: 10,
+  },
+  contact: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  contactHeading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  contactInfo: {
+    fontSize: 16,
+    color: "#555",
+    marginTop: 5,
+  },
+
+  view1: {
+    flex: 1,
+    justifyContent: 'center', // Center content vertically (optional)
+    alignItems: 'center',      // Center content horizontally (optional)
+    padding: 20,
+  },
+  wow: {
+    flexDirection: 'row',     
+    alignItems: 'center',     
+    justifyContent: 'space-between', 
+    padding: 10,
+    
+  },
+  image: {
+    width: 50,                 
+    height: 50,                
+    marginRight: 10,
+    right: 10,                 
+  },
+  text: {
+    fontSize: 11,
+    color: '#333',
+    flexShrink: 1,
+    
   },
 });
 
