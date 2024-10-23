@@ -1,5 +1,10 @@
 import React from "react";
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"; 
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6"; 
+
+; 
+// You can use other icon sets like MaterialIcons
 
 function BottomNav({ currentScreen, navigation }) {
   return (
@@ -8,30 +13,21 @@ function BottomNav({ currentScreen, navigation }) {
         style={styles.navItem}
         onPress={() => navigation.navigate("Home")}
       >
-        <Image
-          source={require("./assets/icons/home.png")}
-          style={[
-            styles.icon,
-            currentScreen === "Home"
-              ? { tintColor: "#FFFFFF" }
-              : { tintColor: "rgba(255, 255, 255, 0.5)" },
-          ]}
+        <Icon
+          name="home-city"
+          size={28}
+          color={currentScreen === "Home" ? "white" : "white"}
         />
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.navItem}
-         // Move onPress here
+        
       >
-        <Image
-          source={require("./assets/icons/heart.png")}
-          onPress={() => navigation.navigate("Heart")}
-          style={[
-            styles.icon,
-            currentScreen === "Heart"
-              ? { tintColor: "#FFFFFF" }
-              : { tintColor: "rgba(255, 255, 255, 0.4)" },
-          ]}
+        <Icon
+          name="account-heart"
+          size={28}
+          color={currentScreen === "Heart" ? "white" : "white"}
         />
       </TouchableOpacity>
 
@@ -39,14 +35,10 @@ function BottomNav({ currentScreen, navigation }) {
         style={styles.navItem}
         onPress={() => navigation.navigate("Account")}
       >
-        <Image
-          source={require("./assets/icons/person.png")}
-          style={[
-            styles.icon,
-            currentScreen === "Account"
-              ? { tintColor: "#FFFFFF" }
-              : { tintColor: "rgba(255, 255, 255, 0.4)" },
-          ]}
+        <FontAwesome6
+          name="people-line"
+          size={28}
+          color={currentScreen === "Account" ? "#c5c5c5" : "white"}
         />
       </TouchableOpacity>
     </View>
@@ -71,11 +63,6 @@ const styles = StyleSheet.create({
 
   navItem: {
     alignItems: "center",
-  },
-
-  icon: {
-    width: 28,
-    height: 28,
   },
 });
 

@@ -21,7 +21,7 @@ function Account({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scroll}>
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         {/* Header Section */}
         <View style={styles.header}>
           <Image source={require("./assets/images/AP.png")} style={styles.logo} />
@@ -30,7 +30,7 @@ function Account({ navigation }) {
 
         {/* About Us Content */}
         <View style={styles.content}>
-          <Text style={styles.heading}>About Us</Text>
+          <Text style={styles.subheading}>About Us</Text>
           <Text style={styles.description}>
             Araling Panlipunan is an educational app designed to teach kids about
             Philippine history and culture through interactive e-books and modules.
@@ -58,7 +58,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/rap.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}>GAGANTE RALPH : UI DESIGN - , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>GAGANTE RALPH : UI DESIGN </Text>- , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -67,7 +67,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/telen.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}>RAYZEL TELEN : EX DESIGN & PERSONA -, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>RAYZEL TELEN : EX DESIGN & PERSONA</Text> -, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -76,7 +76,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/peabo.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}>PEABO SANTIAGO : SPACING -, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>PEABO SANTIAGO : SPACING</Text> -, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -85,7 +85,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/lim.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}>RUSSEL LIM : COLOR THEORY & 60 30 10 Rule - In our Araling Panlipunan project, my focus is on color theory and the 60-30-10 rule. I chose a brown color palette to reflect the theme. The dominant color will cover 60% of the design, such as the background. The secondary color will make up 30%, used for elements like navigation menus and sidebars. Lastly, the accent color will account for 10%, highlighting important elements like buttons, icons, or links.</Text>
+        <Text style={styles.text}><Text style={styles.names}>RUSSEL LIM : COLOR THEORY & 60 30 10 Rule</Text> - In our Araling Panlipunan project, my focus is on color theory and the 60-30-10 rule. I chose a brown color palette to reflect the theme. The dominant color will cover 60% of the design, such as the background. The secondary color will make up 30%, used for elements like navigation menus and sidebars. Lastly, the accent color will account for 10%, highlighting important elements like buttons, icons, or links.</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -94,7 +94,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/panganiban.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>consectetur adipiscing elit</Text>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -103,7 +103,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/malana.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>consectetur adipiscing elit</Text>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
          </View>
          </View>
          
@@ -143,12 +143,16 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#F5F5D6",
   },
+  names: {
+    color: "#95725A",
+    fontWeight: "bold",
+  },
   item2: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
   scroll: {
-    flex: 1,
+   
   },
   parentbox: {
     display: "flex",
@@ -202,6 +206,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#444",
     marginTop: 20,
+    
   },
   socialMedia: {
     marginBottom: 30,
@@ -246,10 +251,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
     marginTop: 20,
+    height: 150,
+    width: 320,
   },
   wow: {
     flexDirection: 'row',     
