@@ -58,7 +58,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/rap.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}><Text style={styles.names}>GAGANTE RALPH : UI DESIGN </Text>- , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>GAGANTE RALPH : UI DESIGN </Text>- As the UI designer for our app, Araling Panlipunan, I utilize my passion for visual aesthetics to enhance the user experience. I draw inspiration from my hobbies in art and design to create captivating interfaces that embody the richness of Philippine culture and history.</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#F5F5D6",
+    paddingBottom: 50,
   },
   names: {
     color: "#95725A",
@@ -209,8 +210,9 @@ const styles = StyleSheet.create({
     
   },
   socialMedia: {
-    marginBottom: 30,
+    
     alignItems: "center",
+    marginTop : 40,
   },
   socialHeading: {
     fontSize: 18,
@@ -222,9 +224,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   icon: {
-    width: 40,
-    height: 40,
-    marginHorizontal: 10,
+    width: 30,
+    height: 30,
+    marginHorizontal: 5,
+
   },
   contact: {
     alignItems: "center",

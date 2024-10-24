@@ -27,14 +27,14 @@ function Login({ navigation }) {
       />
       <Text style={styles.wew}>Login Details</Text>
       <TextInput //username
-        style={[styles.input, { width: 250, height: 50, borderColor: '#887E7E', borderWidth: 1, borderRadius: 20 }]}
+        style={[styles.input, { width: 250, height: 50, borderColor: '#887E7E', borderWidth: 2, borderRadius: 20, }]}
         placeholder="Username"
         placeholderTextColor="#887E7E"
         value={username}
         onChangeText={(text) => setUsername(text)}
       />
       <TextInput //password
-        style={[styles.input, { width: 250, height: 50, borderColor: '#887E7E', borderWidth: 1, borderRadius: 20 }]}
+        style={[styles.input, { width: 250, height: 50, borderColor: '#887E7E', borderWidth: 2, borderRadius: 20 }]}
         placeholder="Password"
         secureTextEntry={true}
         placeholderTextColor="#887E7E"
@@ -46,7 +46,7 @@ function Login({ navigation }) {
       
 
       <TouchableOpacity
-        style={[styles.button, { width: 250, height: 40, backgroundColor: '#95725A' }]}
+        style={[styles.button, { width: 250, height: 40, backgroundColor: '#95725A', }]}
         onPress={() => navigation.navigate('Home')} // Navigate to Dashboard
       >
         <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>Login</Text>
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     color: '#635C5C',
     marginBottom: 20,
     paddingLeft: 20,
+
   },
   button: {
     justifyContent: 'center',
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#95725A',
     marginTop: 20,
     borderRadius: 20,
+    elavation: 50 ,
   },
   forgot: {
     marginTop: 5,
