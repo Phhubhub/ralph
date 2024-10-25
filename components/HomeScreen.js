@@ -130,17 +130,6 @@ const styles = StyleSheet.create({
     
   },
 
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    borderRadius: 40,
-    height: 58,
-    width: 330,
-    paddingHorizontal: 15,
-    marginTop: 20,
-    marginHorizontal: 15,
-  },
 
   iconContainer: {
     padding: 10,
@@ -175,6 +164,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginRight: 15,
     marginLeft: 15,
+    elevation : 8,
   },
 
   popularText: {
@@ -204,6 +194,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#95725A",
     marginHorizontal: 15,
     left: 5,
+    elevation : 8,
   },
 
   MostText: {
@@ -218,6 +209,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     paddingVertical: 10,
     paddingHorizontal: 20,
+    elevation : 8,
   },
 
   OldButton: {
@@ -227,6 +219,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     right : 5,
+    elevation : 8,
   },
 
   buttonText: {
@@ -257,7 +250,8 @@ const styles = StyleSheet.create({
    diseaseImage: {
    width: 340,
    left: 10,
-   borderRadius: 40,  
+   borderRadius: 30,  
+   elevation : 8,
    },
   diseaseImage1: {
     position: "absolute",

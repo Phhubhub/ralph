@@ -58,7 +58,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/rap.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}><Text style={styles.names}>GAGANTE RALPH : UI DESIGN </Text>- As the UI designer for our app, Araling Panlipunan, I utilize my passion for visual aesthetics to enhance the user experience. I draw inspiration from my hobbies in art and design to create captivating interfaces that embody the richness of Philippine culture and history.</Text>
+        <Text style={styles.text}><Text style={styles.names}>GAGANTE RALPH : UI DESIGN </Text>- As the UI designer for our app, Araling Panlipunan, I utilize my passion for visual aesthetics to enhance the user experience. I draw inspiration from my hobbies in art and design to create captivating interfaces that embody the richness of Philippine culture and history."</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -67,7 +67,8 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/telen.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}><Text style={styles.names}>RAYZEL TELEN : EX DESIGN & PERSONA</Text> -, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>RAYZEL TELEN : EX DESIGN & PERSONA</Text> - ”This project is user-friendly, especially for grade school students. This design captures their attention, and users of our project will not quickly get bored. We also aligned our designs with the needs of the users, particularly elementary students.
+        We ensured that the user experience in this system encourages students to read more, not just physical books but also to gain additional knowledge."</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -76,7 +77,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/peabo.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}><Text style={styles.names}>PEABO SANTIAGO : SPACING</Text> -, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>PEABO SANTIAGO : SPACING</Text> - "My specialty in this project is spacing,which i apply to Consistent spacing maintains design cohesion, while balanced white space promotes visual flow. Proximity and alignment create a logical structure, directing users through the content. By prioritizing spacing, we create an accessible and usable design that communicates complex information efficiently"</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -85,7 +86,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/lim.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}><Text style={styles.names}>RUSSEL LIM : COLOR THEORY & 60 30 10 Rule</Text> - In our Araling Panlipunan project, my focus is on color theory and the 60-30-10 rule. I chose a brown color palette to reflect the theme. The dominant color will cover 60% of the design, such as the background. The secondary color will make up 30%, used for elements like navigation menus and sidebars. Lastly, the accent color will account for 10%, highlighting important elements like buttons, icons, or links.</Text>
+        <Text style={styles.text}><Text style={styles.names}>RUSSEL LIM : COLOR THEORY & 60 30 10 Rule</Text> - "In our Araling Panlipunan project, my focus is on color theory and the 60-30-10 rule. I chose a brown color palette to reflect the theme. The dominant color will cover 60% of the design, such as the background. The secondary color will make up 30%, used for elements like navigation menus and sidebars. Lastly, the accent color will account for 10%, highlighting important elements like buttons, icons, or links."</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -94,7 +95,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/panganiban.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}><Text style={styles.names}>consectetur adipiscing elit</Text>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>ARIES PANGANIBAN : TYPOGRAPHY</Text> - ”In this project, my focus is on typography, applying key principles such as clarity of message, aesthetics, branding, emotion, and hierarchy. The right font and arrangement enhance understanding and visual appeal, while consistent font usage aids brand recognition. Different fonts evoke various emotions, and proper text arrangement creates a clear hierarchy, highlighting the importance of information.”</Text>
          </View>
          </View>
          <View style={styles.view1}>
@@ -103,7 +104,7 @@ function Account({ navigation }) {
         <Image source={require('./assets/images/malana.png')} style={styles.image} />
 
         {/* Text on the right */}
-        <Text style={styles.text}><Text style={styles.names}>consectetur adipiscing elit</Text>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <Text style={styles.text}><Text style={styles.names}>MARK JUSTINE MALANA : LAZY LINKING </Text> - “My specialty in this project is lazy linking, and my goal is to create an application that is fast, quick, efficient, and easy to use, ensuring that it effectively satisfies my users' needs and enhances their overall experience.”</Text>
          </View>
          </View>
          
@@ -129,7 +130,7 @@ function Account({ navigation }) {
         {/* Contact Information */}
         <View style={styles.contact}>
           
-          <Text style={styles.contactInfo}>Email: support@aralingpanlipunan.com</Text>
+          <Text style={styles.contactInfo}> Or Email Us : support@aralingpanlipunan.com</Text>
          </View>
       </ScrollView>
       <BottomNav navigation={navigation} />
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
   },
   socialHeading: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "semi-bold",
     color: "#333",
   },
   socialIcons: {
@@ -262,14 +263,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',     
     alignItems: 'center',     
     justifyContent: 'space-between', 
-    padding: 10,
+    
     
   },
   image: {
     width: 50,                 
     height: 50,                
     marginRight: 10,
-    right: 10,                 
+    borderRadius: 10,
+  
   },
   text: {
     fontSize: 11,

@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     color: '#635C5C',
     marginBottom: 20,
     paddingLeft: 20,
+    
 
   },
   button: {
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 20,
     elavation: 50 ,
+    elevation: 5,
   },
   forgot: {
     marginTop: 5,
