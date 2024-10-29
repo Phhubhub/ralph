@@ -28,6 +28,7 @@ function BottomNav({ currentScreen, navigation }) {
           name="account-heart"
           size={28}
           color={currentScreen === "Heart" ? "white" : "white"}
+          
         />
       </TouchableOpacity>
 

@@ -88,7 +88,11 @@ function Home({ navigation }) {
               style={styles.diseaseImage2}
             />
           </TouchableOpacity>
-
+           <View>
+           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
+             <Text style={styles.buttonText}>Log Out</Text>
+           </TouchableOpacity>
+           </View>
         </View>
 
       </ScrollView>
@@ -101,6 +105,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F5F5D6",
+    paddingBottom: 50,
   },
 
   headerContainer: {

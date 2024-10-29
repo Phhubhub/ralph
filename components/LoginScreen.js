@@ -7,25 +7,14 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import loadFonts from "./fonts";
-import "../firebaseConfig"; // Ensure the Firebase config is imported from the root
 
 function Login({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const fontsLoaded = loadFonts();
-
-  const handleLogin = async () => {
-    const auth = getAuth();
-    try {
-      await signInWithEmailAndPassword(auth, username, password);
-      navigation.navigate("Home"); // Navigate to the Home screen if login is successful
-    } catch (err) {
-      setError("Invalid login credentials"); // Display error if login fails
-    }
-  };
 
   if (!fontsLoaded) {
     return null;
@@ -56,7 +45,7 @@ function Login({ navigation }) {
       />
       <Text style={styles.forgot}>Forgot password?</Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Home")}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
@@ -70,7 +59,7 @@ function Login({ navigation }) {
       {/* Sign Up Button */}
       <TouchableOpacity
         style={styles.signupButton}
-        onPress={() => navigation.navigate("Signup")}
+        
       >
         <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
@@ -150,3 +139,4 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
+

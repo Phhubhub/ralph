@@ -107,7 +107,11 @@ function Account({ navigation }) {
         <Text style={styles.text}><Text style={styles.names}>MARK JUSTINE MALANA : LAZY LINKING </Text> - “My specialty in this project is lazy linking, and my goal is to create an application that is fast, quick, efficient, and easy to use, ensuring that it effectively satisfies my users' needs and enhances their overall experience.”</Text>
          </View>
          </View>
-         
+         <View style={styles.last}>
+           <TouchableOpacity style={styles.buttonlast} onPress={() => navigation.navigate("Login")}>
+             <Text style={styles.buttonText}>Log Out</Text>
+           </TouchableOpacity>
+           </View>
 
         {/* Social Media Links */}
         <View style={styles.socialMedia}>
@@ -132,6 +136,7 @@ function Account({ navigation }) {
           
           <Text style={styles.contactInfo}> Or Email Us : support@aralingpanlipunan.com</Text>
          </View>
+
       </ScrollView>
       <BottomNav navigation={navigation} />
       </SafeAreaView>
@@ -145,6 +150,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5D6",
     paddingBottom: 50,
   },
+  buttonlast: {
+    backgroundColor: "#95725A",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 50,
+    borderRadius: 30,
+  },
+  last: {
+    paddingHorizontal: 20,
+    
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  view1: {
+    marginBottom: 20,
+  },
+  wow: {},
   names: {
     color: "#95725A",
     fontWeight: "bold",

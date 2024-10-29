@@ -4,9 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/LoginScreen";
 import Home from "./components/HomeScreen"; // Ensure this points to the updated Home component
-import Account from "./components/AccountScreen.js";
-import "./firebaseConfig";
-import SignupScreen from "./components/SignupScreen";
+import Account from "./components/AccountScreen";
 
 
 
@@ -20,17 +18,13 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Login"
           component={Login}
           options={{ headerShown: false }}
         /> 
-          <Stack.Screen
-          name="Signup"
-          component={SignupScreen}
-          options={{ headerShown: false }}
-        />
+
         <Stack.Screen
           name="Home"
           component={Home}
@@ -46,3 +40,4 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
