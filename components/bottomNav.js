@@ -2,6 +2,8 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"; 
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6"; 
+import Wew from "react-native-vector-icons/MaterialIcons"; 
+
 
 ; 
 // You can use other icon sets like MaterialIcons
@@ -21,13 +23,12 @@ function BottomNav({ currentScreen, navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.navItem}
-        
-      >
-        <Icon
-          name="account-heart"
+        style={styles.navItem} 
+        onPress={() => navigation.navigate("Quiz")}>
+        <Wew
+          name="games"
           size={28}
-          color={currentScreen === "Heart" ? "white" : "white"}
+          color={currentScreen === "Quiz" ? "white" : "white"}
           
         />
       </TouchableOpacity>

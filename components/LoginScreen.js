@@ -58,11 +58,11 @@ function Login({ navigation }) {
 
       {/* Sign Up Button */}
       <TouchableOpacity
-        style={styles.signupButton}
-        
-      >
-        <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
-      </TouchableOpacity>
+  style={styles.signupButton}
+  onPress={() => navigation.navigate("Signup")} // Use "Signup" here
+>
+  <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
+</TouchableOpacity>
     </View>
   );
 }
@@ -135,8 +135,9 @@ const styles = StyleSheet.create({
   signupText: {
     color: '#635C5C',
     fontSize: 14,
+    marginTop: 20, 
+    top: 10, 
   },
 });
 
 export default Login;
-

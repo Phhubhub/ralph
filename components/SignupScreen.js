@@ -7,35 +7,23 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import loadFonts from "./fonts"; // Adjust the path if necessary
-import "../firebaseConfig"; // Ensure your Firebase configuration file is imported
 
 function Signup({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
-  const fontsLoaded = loadFonts();
 
-  const handleSignup = async () => {
-    const auth = getAuth();
+  const handleSignup = () => {
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigation.navigate("Login"); // Navigate to the Login screen on successful signup
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+    // TODO: Implement your desired signup logic here
 
-  if (!fontsLoaded) {
-    return null; // Optionally, you could return a loading screen here
-  }
+    navigation.navigate("Login"); // Navigate to the Login screen on successful signup
+  };
 
   return (
     <View style={styles.container}>
@@ -75,6 +63,7 @@ function Signup({ navigation }) {
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={styles.loginText}>Already have an account? Login</Text>
       </TouchableOpacity>
+      
     </View>
   );
 }
@@ -130,3 +119,4 @@ const styles = StyleSheet.create({
 });
 
 export default Signup;
+

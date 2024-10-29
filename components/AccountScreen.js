@@ -299,9 +299,10 @@ const styles = StyleSheet.create({
   
   },
   text: {
-    fontSize: 11,
+    fontSize: 13,
     color: '#333',
     flexShrink: 1,
+    
     
   },
 });
