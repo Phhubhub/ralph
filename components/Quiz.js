@@ -34,7 +34,98 @@ const Quiz = ({ navigation }) => {
         },
       ],
     },
-    // ... other topics remain unchanged
+    {
+      title: "History",
+      questions: [
+        {
+          question: "Who is known as the 'Father of the Philippine Revolution'?",
+          answers: [
+            { text: "Andres Bonifacio", correct: true },
+            { text: "Emilio Aguinaldo", correct: false },
+            { text: "Jose Rizal", correct: false },
+            { text: "Apolinario Mabini", correct: false },
+          ],
+        },
+        {
+          question: "When did the Philippines gain independence from Spain?",
+          answers: [
+            { text: "1896", correct: false },
+            { text: "1898", correct: true },
+            { text: "1901", correct: false },
+            { text: "1946", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Science",
+      questions: [
+        {
+          question: "What is the chemical symbol for water?",
+          answers: [
+            { text: "H2O", correct: true },
+            { text: "O2", correct: false },
+            { text: "CO2", correct: false },
+            { text: "NaCl", correct: false },
+          ],
+        },
+        {
+          question: "What planet is known as the Red Planet?",
+          answers: [
+            { text: "Earth", correct: false },
+            { text: "Mars", correct: true },
+            { text: "Jupiter", correct: false },
+            { text: "Saturn", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Mathematics",
+      questions: [
+        {
+          question: "What is the value of Pi (π) approximately?",
+          answers: [
+            { text: "3.14", correct: true },
+            { text: "2.71", correct: false },
+            { text: "1.41", correct: false },
+            { text: "3.00", correct: false },
+          ],
+        },
+        {
+          question: "What is 5 squared?",
+          answers: [
+            { text: "10", correct: false },
+            { text: "15", correct: false },
+            { text: "25", correct: true },
+            { text: "30", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Literature",
+      questions: [
+        {
+          question: "Who wrote 'Noli Me Tangere'?",
+          answers: [
+            { text: "Jose Rizal", correct: true },
+            { text: "Andres Bonifacio", correct: false },
+            { text: "Emilio Aguinaldo", correct: false },
+            { text: "Carlos P. Romulo", correct: false },
+          ],
+        },
+        {
+          question: "What is the title of the famous novel by Nick Joaquin?",
+          answers: [
+            { text: "The Woman Who Had Two Navels", correct: true },
+            { text: "The Philippine History", correct: false },
+            { text: "Mga Kuwentong Pambata", correct: false },
+            { text: "The Longest Journey", correct: false },
+          ],
+        },
+      ],
+    },
   ];
 
   const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
@@ -125,7 +216,6 @@ const Quiz = ({ navigation }) => {
             </>
           ) : (
             <Text style={styles.finalScore}>Your final score: {score}/{quizTopics.length * 2}</Text>
-            
           )}
         </View>
         <TouchableOpacity
@@ -206,23 +296,16 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     color: "white",
-    fontSize: 20,
- 
+    fontSize: 18,
   },
   finalScore: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 24,
     color: "#635C5C",
-    marginTop: 20,
-    textAlign: "center",
   },
-  button: {
-    marginBottom: 20,
-  },
+
   buttonText: {
-    color: "#95725A",
+    color: "#635C5C",
     fontSize: 18,
-    marginTop: 20,
     top: 50,
   },
 });
