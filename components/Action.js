@@ -38,6 +38,13 @@ const Action = () => {
           id: doc.id,
           ...doc.data(),
         }));
+
+        console.log(fetchedAction); // Log fetched data to the terminal
+
+        if (fetchedAction.length === 0) {
+          console.log("No data found in the action collection.");
+        }
+
         setAction(fetchedAction);
       } catch (error) {
         console.error("Error fetching action:", error);
@@ -50,26 +57,29 @@ const Action = () => {
   // Firebase Realtime Database Listener
   useEffect(() => {
     const database = getDatabase();
-    const playPauseRef = ref(database, "/test/true"); // Adjusted to your structure
+    const playPauseRef = ref(database, "/test/"); // Accessing the /test node
 
     const listener = onValue(playPauseRef, (snapshot) => {
-      const isPlaying = snapshot.val() === 1; // Play if value is 1
-      setPlayPauseState(isPlaying);
+      const playPauseState = snapshot.val(); // Value should be 1 or 0
 
-      if (videoRef.current) {
-        if (isPlaying) {
-          videoRef.current.playAsync(); // Play video
+      if (playPauseState === 1) {
+        setPlayPauseState(true); // Set to play
+        if (videoRef.current) {
+          videoRef.current.playAsync(); // Play the video
           ToastAndroid.show("Video is resumed", ToastAndroid.SHORT); // Show resume message
-        } else {
-          videoRef.current.pauseAsync(); // Pause video
+        }
+      } else if (playPauseState === 0) {
+        setPlayPauseState(false); // Set to pause
+        if (videoRef.current) {
+          videoRef.current.pauseAsync(); // Pause the video
           ToastAndroid.show("Video is paused", ToastAndroid.SHORT); // Show pause message
         }
       }
     });
 
     return () => {
-      // Cleanup the listener
-      playPauseRef.off();
+      // Cleanup the listener using off() on playPauseRef
+      playPauseRef.off("value", listener);
     };
   }, []);
 
@@ -116,24 +126,30 @@ const Action = () => {
       <Text style={styles.title}>Action</Text>
 
       <ScrollView horizontal>
-        {action.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.card}
-            onPress={() =>
-              handleSlidePress(item.videoUrl, item.title, item.description)
-            }
-          >
-            <Image source={{ uri: item.imageUrl }} style={styles.image} />
-            <Text
-              style={styles.cardTitle}
-              numberOfLines={1}
-              ellipsizeMode="tail"
+        {action.length > 0 ? (
+          action.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={styles.card}
+              onPress={() =>
+                handleSlidePress(item.videoUrl, item.title, item.description)
+              }
             >
-              {item.title}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Image source={{ uri: item.imageUrl }} style={styles.image} />
+              <Text
+                style={styles.cardTitle}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {item.title}
+              </Text>
+            </TouchableOpacity>
+          ))
+        ) : (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No actions available</Text>
+          </View>
+        )}
       </ScrollView>
 
       <Modal
@@ -177,8 +193,7 @@ const Action = () => {
 };
 
 const styles = StyleSheet.create({
-  // All styles remain unchanged
-   container: {
+  container: {
     padding: 10,
   },
 

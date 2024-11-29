@@ -44,6 +44,8 @@ const Drama = () => {
     fetchDrama();
   }, []);
 
+  
+
   const handleSlidePress = (videoUrl, title, description) => {
     if (videoUrl) {
       setCurrentVideoUrl(videoUrl);
