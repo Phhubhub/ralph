@@ -1,23 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Animated,
+  TouchableOpacity,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 
-const AboutUsScreen = () => {
-  const navigation = useNavigation();
+const AboutUsScreen = ({ navigation }) => { // Ensure navigation is passed as a prop
+  const fadeAnim = new Animated.Value(0);
 
   // List of developers with names and roles
   const developers = [
-    { id: '1', name: 'Kath Puyat gods', role: 'Team Leader' },
-    { id: '2', name: 'Nads Mamaw', role: 'UI/UX Designer' },
-    { id: '3', name: 'Ralph Lutang', role: 'Backend Developer' },
-    { id: '4', name: 'Solsona FullStack', role: 'Frontend Developer' },
-    { id: '5', name: 'Avenido asawa ni polizon', role: 'Database Manager' },
-    { id: '6', name: 'Sophia Brown', role: 'Quality Assurance' },
-    { id: '7', name: 'David Wilson', role: 'Mobile Developer' },
+    { id: '1', name: 'Kath Puyat gods', role: 'Team Leader', image: 'https://via.placeholder.com/100' },
+    { id: '2', name: 'Nads Mamaw', role: 'UI/UX Designer', image: 'https://via.placeholder.com/100' },
+    { id: '3', name: 'Ralph Lutang', role: 'Backend Developer', image: 'https://via.placeholder.com/100' },
+    { id: '4', name: 'Solsona FullStack', role: 'Frontend Developer', image: 'https://via.placeholder.com/100' },
+    { id: '5', name: 'Avenido asawa ni polizon', role: 'Database Manager', image: 'https://via.placeholder.com/100' },
+    { id: '6', name: 'Sophia Brown', role: 'Quality Assurance', image: 'https://via.placeholder.com/100' },
+    { id: '7', name: 'David Wilson', role: 'Mobile Developer', image: 'https://via.placeholder.com/100' },
   ];
-
-  const fadeAnim = new Animated.Value(0);
 
   React.useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -29,36 +34,49 @@ const AboutUsScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Header with Back Button */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-          <Ionicons name="arrow-back" size={30} color="white" />
-        </TouchableOpacity>
+      {/* Back Button */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Ionicons name="arrow-back" size={24} color="white" />
+      </TouchableOpacity>
+
+      {/* Header Section */}
+      <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
         <Text style={styles.headerText}>About Us</Text>
-      </View>
-
-      {/* Description Section */}
-      <Text style={styles.description}>
-        We are a group of seven passionate developers collaborating to bring this application to life. 
-        Each member has contributed their unique expertise to make this app a success.
-      </Text>
-
-      {/* Developer List with Animation */}
-      <Animated.View style={[styles.listContainer, { opacity: fadeAnim }]}>
-        <FlatList
-          data={developers}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              <Ionicons name="person-circle" size={60} color="#6200ee" style={styles.icon} />
-              <View style={styles.info}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.role}>{item.role}</Text>
-              </View>
-            </View>
-          )}
-        />
+        <Text style={styles.subHeaderText}>
+          Meet the talented developers behind this amazing project.
+        </Text>
       </Animated.View>
+
+      {/* Developer Section */}
+      {developers.map((developer, index) => (
+        <View
+          key={developer.id}
+          style={[
+            styles.profileContainer,
+            index % 2 === 0 ? styles.profileLeft : styles.profileRight,
+          ]}
+        >
+          {index % 2 === 0 ? (
+            <>
+              {/* Profile Image on Left */}
+              <Image source={{ uri: developer.image }} style={styles.image} />
+              <View style={styles.details}>
+                <Text style={styles.name}>{developer.name}</Text>
+                <Text style={styles.role}>{developer.role}</Text>
+              </View>
+            </>
+          ) : (
+            <>
+              {/* Profile Image on Right */}
+              <View style={styles.details}>
+                <Text style={styles.name}>{developer.name}</Text>
+                <Text style={styles.role}>{developer.role}</Text>
+              </View>
+              <Image source={{ uri: developer.image }} style={styles.image} />
+            </>
+          )}
+        </View>
+      ))}
     </ScrollView>
   );
 };
@@ -66,79 +84,71 @@ const AboutUsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1f1f1f', // Dark background for modern look
-    padding: 20,
+    backgroundColor: '#000000', // Black background
+    paddingHorizontal: 20,
+  },
+  backButton: {
+    marginTop: 10,
+    marginBottom: 20,
+    padding: 10,
+    alignSelf: 'flex-start',
   },
   header: {
-    flexDirection: 'row',
+    marginVertical: 20,
     alignItems: 'center',
-    marginBottom: 20,
-    backgroundColor: 'transparent',
-    paddingVertical: 15,
-    borderRadius: 30,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
   },
   headerText: {
-    fontSize: 30,
-    color: 'white',
+    fontSize: 28,
     fontWeight: 'bold',
-    marginLeft: 15,
-    letterSpacing: 1.5,
+    color: '#ffffff', // White text
+    marginBottom: 10,
   },
-  description: {
+  subHeaderText: {
     fontSize: 16,
-    color: '#ddd',
-    marginBottom: 30,
+    color: '#aaaaaa', // Light gray text for subtlety
     textAlign: 'center',
-    fontStyle: 'italic',
-    lineHeight: 24,
-    letterSpacing: 0.5,
   },
-  listContainer: {
-    paddingBottom: 20,
-  },
-  card: {
+  profileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#2d2d2d',
-    padding: 20,
-    borderRadius: 15,
     marginBottom: 20,
+    padding: 15,
+    backgroundColor: '#1f1f1f', // Dark gray background for cards
+    borderRadius: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
-    elevation: 4,
-    transform: [{ scale: 1 }],
-    transition: 'transform 0.3s ease',
+    elevation: 3,
   },
-  cardHovered: {
-    transform: [{ scale: 1.05 }],
+  profileLeft: {
+    flexDirection: 'row',
   },
-  icon: {
-    marginRight: 20,
-    borderRadius: 30,
-    backgroundColor: '#6200ee',
-    padding: 10,
+  profileRight: {
+    flexDirection: 'row-reverse',
   },
-  info: {
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginHorizontal: 10,
+    borderWidth: 2,
+    borderColor: '#6200EE', // Purple border for modern contrast
+  },
+  details: {
     flex: 1,
+    justifyContent: 'center',
   },
   name: {
     fontSize: 20,
-    color: 'white',
-    fontWeight: '600',
-    letterSpacing: 0.5,
+    fontWeight: 'bold',
+    color: '#ffffff', // White text for names
+    marginBottom: 5,
   },
   role: {
     fontSize: 16,
-    color: '#bbb',
+    color: '#cccccc', // Light gray text for roles
     fontStyle: 'italic',
-    letterSpacing: 0.5,
   },
 });
 

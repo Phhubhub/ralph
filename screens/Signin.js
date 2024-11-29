@@ -11,7 +11,6 @@ import {
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailPassword } from "../firebase/firebaseConfig"; // Import the sign-in function
-import { CheckBox } from 'react-native';
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -19,7 +18,6 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(""); // For displaying messages (error or success)
-  const [isAgreed, setIsAgreed] = useState(false); // State for the checkbox
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -139,22 +137,9 @@ const SignIn = () => {
         <Text style={styles.forgotP}>Forgot Password?</Text>
       </TouchableOpacity>
 
-      {/* Agree to Terms and Conditions Checkbox */}
-      <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={isAgreed}
-          onValueChange={setIsAgreed}
-          tintColors={{ true: '#FF9500', false: 'rgba(255, 255, 255, 0.7)' }}
-        />
-        <Text style={styles.checkboxText}>
-          Agree to Terms and Conditions
-        </Text>
-      </View>
-
       <TouchableOpacity
         onPress={handleSignIn}
-        style={[styles.signInButton, { opacity: isAgreed ? 1 : 0.6 }]} // Disable button if not checked
-        disabled={!isAgreed} // Disable sign-in button when checkbox is not checked
+        style={styles.signInButton}
       >
         <Text style={styles.signInText}>Sign In</Text>
       </TouchableOpacity>
@@ -176,6 +161,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#000000",
     padding: 20,
+    
   },
 
   title: {
@@ -267,7 +253,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Bold",
     color: "#FFFFFF",
     fontSize: 15,
-    right : 190,
+    right: 190,
   },
 
   signInButton: {
@@ -288,44 +274,86 @@ const styles = StyleSheet.create({
 
   signup: {
     flexDirection: "row",
-    justifyContent: "center",
     marginTop: 10,
   },
 
   signupText: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 15,
     color: "#FFFFFF",
+    fontSize: 16,
   },
 
   signUp: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 15,
-    color: "#E38400",
-    fontWeight: "bold",
-  },
-
-  errorText: {
-    color: "red",
+    color: "#FF9500",
     fontSize: 16,
-    marginBottom: 10,
+    fontFamily: "Roboto-Bold",
   },
 
   successText: {
-    color: "#FF9500",
-    fontSize: 16,
+    color: "#4CAF50",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+
+  errorText: {
+    color: "#F44336",
+    textAlign: "center",
     marginBottom: 10,
   },
 
   checkboxContainer: {
     flexDirection: "row",
+    marginBottom: 20,
     alignItems: "center",
-    marginVertical: 10,
+    right: 50,
+    paddingTop: 10,
+    marginBottom: 3,
   },
 
   checkboxText: {
-    color: "#FF9500",
-    marginLeft: 10,
+    color: "#FFFFFF",
+    fontSize: 14,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+
+  modalContainer: {
+    width: 300,
+    backgroundColor: "#FFFFFF",
+    padding: 20,
+    borderRadius: 10,
+  },
+
+  modalContent: {
+    maxHeight: 300,
+  },
+
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+
+  modalText: {
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 20,
+  },
+
+  closeButton: {
+    backgroundColor: "#FF9500",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+
+  closeButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
   },
 });
 
