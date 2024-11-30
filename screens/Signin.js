@@ -25,21 +25,13 @@ const SignIn = () => {
 
   const handleSignIn = async () => {
     try {
-      setMessage(""); // Clear any previous messages
-
-      // Attempt to sign in
       await signInWithEmailPassword(email, password);
-
-      // Show success message before navigating
-      setMessage("Successfully signed in!");
-
-      // Navigate to HomeScreen after a small delay to show the message
+      setMessage("Successfully signed in!"); // Set the success message
       setTimeout(() => {
-        navigation.navigate("HomeScreen");
-      }, 1000); // Adjust delay as needed (1 second in this case)
+        navigation.navigate("HomeScreen");  // Navigate to the dashboard or desired screen after 2 seconds
+      }, 2000); // Delay to show the message before navigating
     } catch (error) {
-      // Show error message if the sign-in fails
-      setMessage("Invalid credentials");
+      setMessage("Error signing in. Please check your credentials.");
     }
   };
 
@@ -161,7 +153,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#000000",
     padding: 20,
-    
   },
 
   title: {
@@ -253,7 +244,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Bold",
     color: "#FFFFFF",
     fontSize: 15,
-    right: 190,
+    right: 20,
   },
 
   signInButton: {
@@ -298,62 +289,6 @@ const styles = StyleSheet.create({
     color: "#F44336",
     textAlign: "center",
     marginBottom: 10,
-  },
-
-  checkboxContainer: {
-    flexDirection: "row",
-    marginBottom: 20,
-    alignItems: "center",
-    right: 50,
-    paddingTop: 10,
-    marginBottom: 3,
-  },
-
-  checkboxText: {
-    color: "#FFFFFF",
-    fontSize: 14,
-  },
-
-  modalOverlay: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-
-  modalContainer: {
-    width: 300,
-    backgroundColor: "#FFFFFF",
-    padding: 20,
-    borderRadius: 10,
-  },
-
-  modalContent: {
-    maxHeight: 300,
-  },
-
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-
-  modalText: {
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 20,
-  },
-
-  closeButton: {
-    backgroundColor: "#FF9500",
-    padding: 10,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-
-  closeButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -8,11 +8,13 @@ import {
   Modal,
   TouchableOpacity,
   ActivityIndicator,
+  ToastAndroid, // For showing toast messages
 } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Video } from "expo-av";
+import { getDatabase, ref, onValue } from "firebase/database";
 import { useCustomFonts } from "./font";
 
 const Recommendation = () => {
@@ -22,9 +24,12 @@ const Recommendation = () => {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDescription, setCurrentDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(true); 
+  const [playPauseState, setPlayPauseState] = useState(true); // Default: Playing
+  const videoRef = useRef(null); // Video reference
+
   const fontsLoaded = useCustomFonts();
 
+  // Fetch recommendation data from Firestore
   useEffect(() => {
     const fetchRecommendation = async () => {
       try {
@@ -33,15 +38,49 @@ const Recommendation = () => {
           id: doc.id,
           ...doc.data(),
         }));
+
+        console.log(fetchedRecommendation); // Log fetched data to the terminal
+
+        if (fetchedRecommendation.length === 0) {
+          console.log("No data found in the recommendation collection.");
+        }
+
         setRecommendation(fetchedRecommendation);
       } catch (error) {
         console.error("Error fetching recommendation:", error);
-      } finally {
-        setIsFetching(false); 
       }
     };
 
     fetchRecommendation();
+  }, []);
+
+  // Firebase Realtime Database Listener for Play/Pause control
+  useEffect(() => {
+    const database = getDatabase();
+    const playPauseRef = ref(database, "/test/"); // Accessing the /test node
+
+    const listener = onValue(playPauseRef, (snapshot) => {
+      const playPauseState = snapshot.val(); // Value should be 1 or 0
+
+      if (playPauseState === 1) {
+        setPlayPauseState(true); // Set to play
+        if (videoRef.current) {
+          videoRef.current.playAsync(); // Play the video
+          ToastAndroid.show("Video is resumed", ToastAndroid.SHORT); // Show resume message
+        }
+      } else if (playPauseState === 0) {
+        setPlayPauseState(false); // Set to pause
+        if (videoRef.current) {
+          videoRef.current.pauseAsync(); // Pause the video
+          ToastAndroid.show("Video is paused", ToastAndroid.SHORT); // Show pause message
+        }
+      }
+    });
+
+    return () => {
+      // Cleanup the listener using off() on playPauseRef
+      playPauseRef.off("value", listener);
+    };
   }, []);
 
   const handleSlidePress = (videoUrl, title, description) => {
@@ -51,6 +90,11 @@ const Recommendation = () => {
       setCurrentDescription(description);
       setModalVisible(true);
       setIsLoading(true);
+
+      // Start the video when modal opens
+      if (videoRef.current) {
+        videoRef.current.playAsync();
+      }
     }
   };
 
@@ -59,10 +103,14 @@ const Recommendation = () => {
     setCurrentVideoUrl("");
     setCurrentTitle("");
     setCurrentDescription("");
+    if (videoRef.current) {
+      videoRef.current.pauseAsync(); // Pause when modal closes
+    }
   };
 
-  const handleFullScreen = (status) => {
-    console.log("Fullscreen status:", status);
+  const handleVideoError = (error) => {
+    console.error("Video error:", error);
+    setIsLoading(false);
   };
 
   if (!fontsLoaded) {
@@ -75,20 +123,11 @@ const Recommendation = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recommendation</Text>
+      <Text style={styles.title}>Recommendations</Text>
 
-      {isFetching ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#FF9500" />
-          <Text style={styles.loadingText}>...</Text>
-        </View>
-      ) : recommendation.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No recommendation trailers available.</Text>
-        </View>
-      ) : (
-        <ScrollView horizontal>
-          {recommendation.map((item) => (
+      <ScrollView horizontal>
+        {recommendation.length > 0 ? (
+          recommendation.map((item) => (
             <TouchableOpacity
               key={item.id}
               style={styles.card}
@@ -105,9 +144,13 @@ const Recommendation = () => {
                 {item.title}
               </Text>
             </TouchableOpacity>
-          ))}
-        </ScrollView>
-      )}
+          ))
+        ) : (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No recommendations available</Text>
+          </View>
+        )}
+      </ScrollView>
 
       <Modal
         visible={modalVisible}
@@ -124,12 +167,12 @@ const Recommendation = () => {
               <Icon name="arrow-left" size={19} color="#FFFFFF" />
             </TouchableOpacity>
             <Video
+              ref={videoRef}
               source={{ uri: currentVideoUrl }}
               style={styles.videoPlayer}
               useNativeControls={true}
               resizeMode="cover"
-              shouldPlay={true}
-              onFullscreenUpdate={handleFullScreen}
+              onError={handleVideoError}
               onLoadStart={() => setIsLoading(true)}
               onLoad={() => setIsLoading(false)}
             />

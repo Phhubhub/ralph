@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -8,12 +8,14 @@ import {
   Modal,
   TouchableOpacity,
   ActivityIndicator,
+  ToastAndroid, // For showing toast messages
 } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Video } from "expo-av";
 import { useCustomFonts } from "./font";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 const Drama = () => {
   const [drama, setDrama] = useState([]);
@@ -22,9 +24,11 @@ const Drama = () => {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDescription, setCurrentDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(true); 
+  const [playPauseState, setPlayPauseState] = useState(true); // Default: Playing
+  const videoRef = useRef(null); // Video reference
   const fontsLoaded = useCustomFonts();
 
+  // Fetch drama data from Firestore
   useEffect(() => {
     const fetchDrama = async () => {
       try {
@@ -36,15 +40,36 @@ const Drama = () => {
         setDrama(fetchedDrama);
       } catch (error) {
         console.error("Error fetching drama:", error);
-      } finally {
-        setIsFetching(false); 
       }
     };
 
     fetchDrama();
   }, []);
 
-  
+  // Firebase Realtime Database Listener for play/pause state
+  useEffect(() => {
+    const database = getDatabase();
+    const playPauseRef = ref(database, "/test/"); // Accessing the /test node
+
+    const listener = onValue(playPauseRef, (snapshot) => {
+      const state = snapshot.val(); // Value should be 1 or 0
+      setPlayPauseState(state === 1); // 1 means play, 0 means pause
+
+      if (videoRef.current) {
+        if (state === 1) {
+          videoRef.current.playAsync(); // Play the video
+          ToastAndroid.show("Video is resumed", ToastAndroid.SHORT); // Show resume message
+        } else {
+          videoRef.current.pauseAsync(); // Pause the video
+          ToastAndroid.show("Video is paused", ToastAndroid.SHORT); // Show pause message
+        }
+      }
+    });
+
+    return () => {
+      playPauseRef.off("value", listener); // Cleanup listener
+    };
+  }, []);
 
   const handleSlidePress = (videoUrl, title, description) => {
     if (videoUrl) {
@@ -52,7 +77,12 @@ const Drama = () => {
       setCurrentTitle(title);
       setCurrentDescription(description);
       setModalVisible(true);
-      setIsLoading(true);
+      setIsLoading(true); // Show loading spinner when video is about to load
+
+      // Start the video when modal opens
+      if (videoRef.current && playPauseState) {
+        videoRef.current.playAsync(); // Play immediately if state is set to play
+      }
     }
   };
 
@@ -61,10 +91,14 @@ const Drama = () => {
     setCurrentVideoUrl("");
     setCurrentTitle("");
     setCurrentDescription("");
+    if (videoRef.current) {
+      videoRef.current.pauseAsync(); // Pause when modal closes
+    }
   };
 
-  const handleFullScreen = (status) => {
-    console.log("Fullscreen status:", status);
+  const handleVideoError = (error) => {
+    console.error("Video error:", error);
+    setIsLoading(false);
   };
 
   if (!fontsLoaded) {
@@ -79,18 +113,9 @@ const Drama = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Drama</Text>
 
-      {isFetching ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#FF9500" />
-          <Text style={styles.loadingText}>...</Text>
-        </View>
-      ) : drama.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No drama trailers available.</Text>
-        </View>
-      ) : (
-        <ScrollView horizontal>
-          {drama.map((item) => (
+      <ScrollView horizontal>
+        {drama.length > 0 ? (
+          drama.map((item) => (
             <TouchableOpacity
               key={item.id}
               style={styles.card}
@@ -107,9 +132,13 @@ const Drama = () => {
                 {item.title}
               </Text>
             </TouchableOpacity>
-          ))}
-        </ScrollView>
-      )}
+          ))
+        ) : (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No drama available</Text>
+          </View>
+        )}
+      </ScrollView>
 
       <Modal
         visible={modalVisible}
@@ -126,12 +155,12 @@ const Drama = () => {
               <Icon name="arrow-left" size={19} color="#FFFFFF" />
             </TouchableOpacity>
             <Video
+              ref={videoRef}
               source={{ uri: currentVideoUrl }}
               style={styles.videoPlayer}
               useNativeControls={true}
               resizeMode="cover"
-              shouldPlay={true}
-              onFullscreenUpdate={handleFullScreen}
+              onError={handleVideoError}
               onLoadStart={() => setIsLoading(true)}
               onLoad={() => setIsLoading(false)}
             />

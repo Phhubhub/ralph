@@ -56,7 +56,7 @@ const Sidebar = ({ isVisible, onClose, onLogout }) => {
         <Text style={styles.Text}>About Us</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.Item, styles.logout]} onPress={() => navigation.navigate("HomeScreen")}>
+      <TouchableOpacity style={[styles.Item, styles.logout]} onPress={() => navigation.navigate("Signin")}>
         <Ionicons name="log-out" size={20} color="#FFFFFF" />
         <Text style={styles.Text}>Logout</Text>
       </TouchableOpacity>

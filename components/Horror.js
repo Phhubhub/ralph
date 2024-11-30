@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -8,11 +8,13 @@ import {
   Modal,
   TouchableOpacity,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Video } from "expo-av";
+import { getDatabase, ref, onValue } from "firebase/database";
 import { useCustomFonts } from "./font";
 
 const Horror = () => {
@@ -22,27 +24,63 @@ const Horror = () => {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDescription, setCurrentDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(true); 
+  const [playPauseState, setPlayPauseState] = useState(true); // Default: Playing
+  const videoRef = useRef(null); // Video reference
+
   const fontsLoaded = useCustomFonts();
 
   useEffect(() => {
     const fetchHorror = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "horror"));
-        const fetchedHorror = querySnapshot.docs.map((doc) => ({
+        const fetchedAction = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setHorror(fetchedHorror);
+
+        console.log(fetchedAction); // Log fetched data to the terminal
+
+        if (fetchedAction.length === 0) {
+          console.log("No data found in the action collection.");
+        }
+
+        setHorror(fetchedAction);
       } catch (error) {
-        console.error("Error fetching horror:", error);
-      } finally {
-        setIsFetching(false); 
+        console.error("Error fetching action:", error);
       }
     };
 
     fetchHorror();
   }, []);
+
+  useEffect(() => {
+    const database = getDatabase();
+    const playPauseRef = ref(database, "/test/"); // Accessing the /test node
+
+    const listener = onValue(playPauseRef, (snapshot) => {
+      const playPauseState = snapshot.val(); // Value should be 1 or 0
+
+      if (playPauseState === 1) {
+        setPlayPauseState(true); // Set to play
+        if (videoRef.current) {
+          videoRef.current.playAsync(); // Play the video
+          ToastAndroid.show("Video is resumed", ToastAndroid.SHORT); // Show resume message
+        }
+      } else if (playPauseState === 0) {
+        setPlayPauseState(false); // Set to pause
+        if (videoRef.current) {
+          videoRef.current.pauseAsync(); // Pause the video
+          ToastAndroid.show("Video is paused", ToastAndroid.SHORT); // Show pause message
+        }
+      }
+    });
+
+    return () => {
+      // Cleanup the listener using off() on playPauseRef
+      playPauseRef.off("value", listener);
+    };
+  }, []);
+
 
   const handleSlidePress = (videoUrl, title, description) => {
     if (videoUrl) {
@@ -51,6 +89,11 @@ const Horror = () => {
       setCurrentDescription(description);
       setModalVisible(true);
       setIsLoading(true);
+
+      // Start the video when modal opens
+      if (videoRef.current) {
+        videoRef.current.playAsync();
+      }
     }
   };
 
@@ -59,10 +102,14 @@ const Horror = () => {
     setCurrentVideoUrl("");
     setCurrentTitle("");
     setCurrentDescription("");
+    if (videoRef.current) {
+      videoRef.current.pauseAsync(); // Pause when modal closes
+    }
   };
 
-  const handleFullScreen = (status) => {
-    console.log("Fullscreen status:", status);
+  const handleVideoError = (error) => {
+    console.error("Video error:", error);
+    setIsLoading(false);
   };
 
   if (!fontsLoaded) {
@@ -77,12 +124,7 @@ const Horror = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Horror</Text>
 
-      {isFetching ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#FF9500" />
-          <Text style={styles.loadingText}>...</Text>
-        </View>
-      ) : horror.length === 0 ? (
+      {horror.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyText}>No horror trailers available.</Text>
         </View>
@@ -124,12 +166,12 @@ const Horror = () => {
               <Icon name="arrow-left" size={19} color="#FFFFFF" />
             </TouchableOpacity>
             <Video
+              ref={videoRef}
               source={{ uri: currentVideoUrl }}
               style={styles.videoPlayer}
               useNativeControls={true}
               resizeMode="cover"
-              shouldPlay={true}
-              onFullscreenUpdate={handleFullScreen}
+              onError={handleVideoError}
               onLoadStart={() => setIsLoading(true)}
               onLoad={() => setIsLoading(false)}
             />
