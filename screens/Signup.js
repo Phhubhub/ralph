@@ -1,9 +1,18 @@
-//////////////////////////////////////////////////////////////////
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Modal,
+  ScrollView,
+} from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { signUpWithEmailPassword } from "../firebase/firebaseConfig";
+import CheckBox from "expo-checkbox";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -13,6 +22,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false); // Added this line
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -28,10 +39,10 @@ const SignUp = () => {
       return;
     }
     try {
-      setErrorMessage(""); 
+      setErrorMessage("");
       await signUpWithEmailPassword(email, password);
       alert("Account created successfully!");
-      navigation.navigate("Signin"); 
+      navigation.navigate("Signin");
     } catch (error) {
       setErrorMessage("Error creating account: " + error.message);
     }
@@ -68,7 +79,12 @@ const SignUp = () => {
       </View>
 
       <View style={styles.inputContainer}>
-        <FontAwesome name="envelope" size={20} color="rgba(255, 255, 255, 0.7)" style={styles.inputIcon} />
+        <FontAwesome
+          name="envelope"
+          size={20}
+          color="rgba(255, 255, 255, 0.7)"
+          style={styles.inputIcon}
+        />
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -80,7 +96,12 @@ const SignUp = () => {
       </View>
 
       <View style={styles.inputContainer}>
-        <Ionicons name="lock-closed" size={20} color="rgba(255, 255, 255, 0.7)" style={styles.inputIcon} />
+        <Ionicons
+          name="lock-closed"
+          size={20}
+          color="rgba(255, 255, 255, 0.7)"
+          style={styles.inputIcon}
+        />
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -90,12 +111,21 @@ const SignUp = () => {
           onChangeText={setPassword}
         />
         <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
-          <Ionicons name={passwordVisible ? "eye-off" : "eye"} size={20} color="rgba(255, 255, 255, 0.7)" />
+          <Ionicons
+            name={passwordVisible ? "eye-off" : "eye"}
+            size={20}
+            color="rgba(255, 255, 255, 0.7)"
+          />
         </TouchableOpacity>
       </View>
 
       <View style={styles.inputContainer}>
-        <Ionicons name="lock-closed" size={20} color="rgba(255, 255, 255, 0.7)" style={styles.inputIcon} />
+        <Ionicons
+          name="lock-closed"
+          size={20}
+          color="rgba(255, 255, 255, 0.7)"
+          style={styles.inputIcon}
+        />
         <TextInput
           style={styles.input}
           placeholder="Confirm Password"
@@ -104,14 +134,37 @@ const SignUp = () => {
           value={confirmPassword}
           onChangeText={setConfirmPassword}
         />
-        <TouchableOpacity onPress={toggleConfirmPasswordVisibility} style={styles.eyeIcon}>
-          <Ionicons name={confirmPasswordVisible ? "eye-off" : "eye"} size={20} color="rgba(255, 255, 255, 0.7)" />
+        <TouchableOpacity
+          onPress={toggleConfirmPasswordVisibility}
+          style={styles.eyeIcon}
+        >
+          <Ionicons
+            name={confirmPasswordVisible ? "eye-off" : "eye"}
+            size={20}
+            color="rgba(255, 255, 255, 0.7)"
+          />
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>
-        <Text style={styles.signUpText}>Sign Up</Text>
-      </TouchableOpacity>
+      <View style={styles.checkboxContainer}>
+        <CheckBox
+          value={isChecked}
+          onValueChange={setIsChecked}
+          style={styles.checkbox}
+        />
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Text style={styles.termsText}>I agree to the Terms and Conditions</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity
+         onPress={handleSignUp}
+         style={[styles.signUpButton,
+         { backgroundColor: isChecked ? "#FFFFFF" : "#D3D3D3" },]}
+          disabled={!isChecked}
+      >
+      <Text style={[styles.signUpText,{ color: isChecked ? "#000000" : "#A9A9A9" },]}> Sign Up </Text>
+     </TouchableOpacity>
 
       <View style={styles.signIn}>
         <Text style={styles.signInText}>Already have an account? </Text>
@@ -119,6 +172,44 @@ const SignUp = () => {
           <Text style={styles.signInLink}>Sign In</Text>
         </TouchableOpacity>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <ScrollView>
+              <Text style={styles.modalTitle}>Terms and Conditions</Text>
+              <Text style={styles.modalText}>
+              Terms and Conditions
+
+By signing up for an account, you agree to the following terms and conditions:
+
+           1. Account Registration: You are required to provide accurate and complete information during the registration process. You are responsible for maintaining the confidentiality of your account information and password.
+
+Use of Service: You agree to use the service only for lawful purposes and in accordance with the guidelines set forth by the platform. You may not use the service for any illegal activities or actions that violate the rights of others.
+
+Privacy Policy: We are committed to protecting your privacy. Please refer to our Privacy Policy for details on how we collect, use, and protect your personal information.
+
+Intellectual Property: All content, trademarks, logos, and other intellectual property related to the service are the property of the company or its licensors and are protected by copyright laws.
+
+5.Termination of Account: We reserve the right to suspend or terminate your account if we believe you have violated these terms and conditions. Upon termination, you will lose access to your account and all associated content. 6.Agreement to Terms: By ticking the checkbox and proceeding with the sign-up, you confirm that you have read, understood, and agree to abide by these Terms and Conditions.
+
+
+              </Text>
+            </ScrollView>
+            <TouchableOpacity
+              onPress={() => setModalVisible(false)}
+              style={styles.closeButton}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -249,6 +340,52 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 16,
     marginBottom: 10,
+  },
+
+
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  checkbox: {
+    marginRight: 10,
+  },
+  termsText: {
+    color: "#E38400",
+    textDecorationLine: "underline",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    width: "80%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  modalText: {
+    fontSize: 16,
+    color: "#333",
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: "#E38400",
+    padding: 10,
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
 
