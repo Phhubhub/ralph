@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginHorizontal: 10,
     borderWidth: 2,
-    borderColor: '#6200EE', // Purple border for modern contrast
+    borderColor: '#FF9500', // Purple border for modern contrast
   },
   details: {
     flex: 1,

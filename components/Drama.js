@@ -15,7 +15,7 @@ import { db } from "../firebase/firebaseConfig";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Video } from "expo-av";
 import { useCustomFonts } from "./font";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, off } from "firebase/database";
 
 const Drama = () => {
   const [drama, setDrama] = useState([]);
@@ -49,27 +49,31 @@ const Drama = () => {
   // Firebase Realtime Database Listener for play/pause state
   useEffect(() => {
     const database = getDatabase();
-    const playPauseRef = ref(database, "/test/"); // Accessing the /test node
-
+    const playPauseRef = ref(database, "/test/");
+  
     const listener = onValue(playPauseRef, (snapshot) => {
-      const state = snapshot.val(); // Value should be 1 or 0
-      setPlayPauseState(state === 1); // 1 means play, 0 means pause
-
-      if (videoRef.current) {
-        if (state === 1) {
-          videoRef.current.playAsync(); // Play the video
-          ToastAndroid.show("Video is resumed", ToastAndroid.SHORT); // Show resume message
-        } else {
-          videoRef.current.pauseAsync(); // Pause the video
-          ToastAndroid.show("Video is paused", ToastAndroid.SHORT); // Show pause message
+      const playPauseState = snapshot.val(); 
+  
+      if (playPauseState === 1) {
+        setPlayPauseState(true);
+        if (videoRef.current) {
+          videoRef.current.playAsync();
+          ToastAndroid.show("Video is resumed", ToastAndroid.SHORT);
+        }
+      } else if (playPauseState === 0) {
+        setPlayPauseState(false);
+        if (videoRef.current) {
+          videoRef.current.pauseAsync();
+          ToastAndroid.show("Video is paused", ToastAndroid.SHORT);
         }
       }
     });
-
+  
     return () => {
-      playPauseRef.off("value", listener); // Cleanup listener
+      off(playPauseRef, "value", listener); // Correct cleanup
     };
   }, []);
+  
 
   const handleSlidePress = (videoUrl, title, description) => {
     if (videoUrl) {

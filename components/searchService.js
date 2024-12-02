@@ -25,6 +25,7 @@ export const searchMovies = async (searchTerm) => {
       const querySnapshot = await getDocs(q);
       const results = querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        
         ...doc.data(),
         genre,
       }));
@@ -37,3 +38,5 @@ export const searchMovies = async (searchTerm) => {
     console.error("Error searching movies:", error);
   }
 };
+
+export default searchMovies;

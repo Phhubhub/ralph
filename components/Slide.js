@@ -16,7 +16,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Pagination from "./Pagination";
 import { Video } from "expo-av";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, off } from "firebase/database";
 
 const SlideShow = () => {
   const [slides, setSlides] = useState([]);
@@ -35,31 +35,31 @@ const SlideShow = () => {
   // Firebase Realtime Database Listener for Play/Pause
   useEffect(() => {
     const database = getDatabase();
-    const playPauseRef = ref(database, "/test/"); // Accessing the /test node
-
+    const playPauseRef = ref(database, "/test/");
+  
     const listener = onValue(playPauseRef, (snapshot) => {
-      const playPauseState = snapshot.val(); // Value should be 1 or 0
-
+      const playPauseState = snapshot.val(); 
+  
       if (playPauseState === 1) {
-        setPlayPauseState(true); // Set to play
+        setPlayPauseState(true);
         if (videoRef.current) {
-          videoRef.current.playAsync(); // Play the video
-          ToastAndroid.show("Video is resumed", ToastAndroid.SHORT); // Show resume message
+          videoRef.current.playAsync();
+          ToastAndroid.show("Video is resumed", ToastAndroid.SHORT);
         }
       } else if (playPauseState === 0) {
-        setPlayPauseState(false); // Set to pause
+        setPlayPauseState(false);
         if (videoRef.current) {
-          videoRef.current.pauseAsync(); // Pause the video
-          ToastAndroid.show("Video is paused", ToastAndroid.SHORT); // Show pause message
+          videoRef.current.pauseAsync();
+          ToastAndroid.show("Video is paused", ToastAndroid.SHORT);
         }
       }
     });
-
+  
     return () => {
-      // Cleanup the listener using off() on playPauseRef
-      playPauseRef.off("value", listener);
+      off(playPauseRef, "value", listener); // Correct cleanup
     };
   }, []);
+  
 
   // Fetch slides from Firestore
   useEffect(() => {
@@ -76,6 +76,8 @@ const SlideShow = () => {
       } catch (error) {
         console.error("Error fetching slides:", error);
         setLoading(false);
+
+        
       }
     };
 

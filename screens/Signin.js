@@ -44,7 +44,7 @@ const SignIn = () => {
         <View style={[styles.slash, styles.two]} />
         <TouchableOpacity
           style={[styles.socialButton]}
-          onPress={() => Linking.openURL("https://www.google.com")}
+          onPress={() => Linking.openURL("https://accounts.google.com/v3/signin/identifier?authuser=0&continue=https%3A%2F%2Fwww.google.com%2F&ec=GAlAmgQ&hl=en&flowName=GlifWebSignIn&flowEntry=AddSession&dsh=S-181663545%3A1733142765612670&ddm=1")}
         >
           <Image
             source={require("../assets/icons/Google.png")}

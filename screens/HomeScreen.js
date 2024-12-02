@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
@@ -8,73 +8,38 @@ import {
   Text,
   ScrollView,
   TextInput,
-  Platform, 
-  FlatList
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import SlideShow from '../components/Slide';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
-import { Video } from 'expo-av';
-import Recommendation from '../components/Recommendation';
-import Action from '../components/Action';
-import Horror from '../components/Horror';
-import Fantasy from '../components/Fantasy';
-import Thriller from '../components/Thriller'; 
-import Drama from '../components/Drama';
-import Sidebar from '../components/SideBar';
+  ActivityIndicator
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import SlideShow from "../components/Slide";
+import Recommendation from "../components/Recommendation";
+import Action from "../components/Action";
+import Horror from "../components/Horror";
+import Fantasy from "../components/Fantasy";
+import Thriller from "../components/Thriller";
+import Drama from "../components/Drama";
+import Sidebar from "../components/SideBar";
+import { searchMovies } from "../components/searchService"; 
+import { Video } from "expo-av"; 
+import { query, collection, orderBy, getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 const HomeScreen = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [slides, setSlides] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isPaused, setIsPaused] = useState(false);
-  const [videoStatusText, setVideoStatusText] = useState('');
-  const [currentVideoUrl, setCurrentVideoUrl] = useState('');
-  const [isSearchExpanded, setIsSearchExpanded] = useState(false);  
-  const [movies, setMovies] = useState([]);  // Store all movies
-  const [suggestions, setSuggestions] = useState([]);  // Store search suggestions
+  const [currentVideoUrl, setCurrentVideoUrl] = useState("");
+  const [currentTitle, setCurrentTitle] = useState("");
+  const [currentDescription, setCurrentDescription] = useState("");
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchResults, setSearchResults] = useState([]); 
+  const [isSearchVisible, setIsSearchVisible] = useState(false); 
+  const [loading, setLoading] = useState(false); 
+  const [videoLoading, setVideoLoading] = useState(true); 
 
-  // Fetch all movies from Firestore
-  const fetchMovies = async () => {
-    try {
-      const q = query(collection(db, 'movies'));
-      const querySnapshot = await getDocs(q);
-      const fetchedMovies = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setMovies(fetchedMovies);  // Store all movies in state
-    } catch (error) {
-      console.error('Error fetching movies:', error);
-    }
-  };
-
-  // Handle search query and fetch suggestions
-  const handleSearch = async (query) => {
-    setSearchQuery(query);
-    if (query === '') {
-      setSuggestions([]);  // Clear suggestions if search is empty
-    } else {
-      // Query Firestore to find movies with titles that match the search query
-      const q = query(collection(db, 'movies'), where('title', '>=', query), where('title', '<=', query + '\uf8ff'));
-      const querySnapshot = await getDocs(q);
-      const fetchedSuggestions = querySnapshot.docs.map((doc) => doc.data().title);
-      setSuggestions(fetchedSuggestions);  // Update suggestions based on query
-    }
-  };
-
-  // Handle movie selection from suggestions
-  const handleSuggestionSelect = (title) => {
-    setSearchQuery(title);
-    setSuggestions([]);  // Clear suggestions after selecting a title
-  };
-
-  // Fetch slide data from Firestore
   const fetchSlides = async () => {
     try {
-      const q = query(collection(db, 'slides'), orderBy('order'));
+      const q = query(collection(db, "slides"), orderBy("order"));
       const querySnapshot = await getDocs(q);
       const fetchedSlides = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -82,39 +47,66 @@ const HomeScreen = () => {
       }));
       setSlides(fetchedSlides);
     } catch (error) {
-      console.error('Error fetching slides:', error);
+      console.error("Error fetching slides:", error);
     }
   };
 
   useEffect(() => {
     fetchSlides();
-    fetchMovies();  // Fetch movies when component mounts
   }, []);
+
+  const handleSearch = async () => {
+    setLoading(true); 
+    if (searchTerm.length > 0) {
+      const results = await searchMovies(searchTerm); 
+      setSearchResults(results);
+    } else {
+      setSearchResults([]); 
+    }
+    setLoading(false);
+  };
+
+  const handleSlidePress = (videoUrl, title, description) => {
+    setCurrentVideoUrl(videoUrl);
+    setCurrentTitle(title);
+    setCurrentDescription(description);
+    setModalVisible(true);
+
+    setSearchTerm("");
+    setSearchResults([]);
+    setIsSearchVisible(false); 
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setCurrentVideoUrl("");
+    setCurrentTitle("");
+    setCurrentDescription("");
+    setVideoLoading(true); 
+  };
+
+  const handleVideoLoad = () => {
+    setVideoLoading(false); 
+  };
 
   const toggleSidebar = () => {
     setSidebarVisible((prev) => !prev);
   };
 
-  const handleSlidePress = (videoUrl) => {
-    if (videoUrl) {
-      setCurrentVideoUrl(videoUrl);
-      setModalVisible(true);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setModalVisible(false);
-    setCurrentVideoUrl('');
-    setVideoStatusText('');
-  };
-
   const toggleSearch = () => {
-    setIsSearchExpanded(!isSearchExpanded);  // Toggle search bar expansion
+    if (isSearchVisible) {
+      setSearchTerm("");
+      setSearchResults([]);
+    }
+    setIsSearchVisible((prev) => !prev);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 0 }} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 0 }}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <TouchableOpacity onPress={toggleSidebar}>
             {sidebarVisible ? (
@@ -123,78 +115,110 @@ const HomeScreen = () => {
               <Ionicons name="menu" size={30} color="#FFFFFF" />
             )}
           </TouchableOpacity>
-          
-          {/* Search Bar (Visible only when expanded) */}
-          {isSearchExpanded && (
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search..."
-              value={searchQuery}
-              onChangeText={handleSearch}  // Update search query and fetch suggestions
-              placeholderTextColor="#AAAAAA"
-            />
-          )}
 
-          {/* Search Icon */}
-          <TouchableOpacity onPress={toggleSearch} style={styles.searchIconContainer}>
+          <TouchableOpacity onPress={toggleSearch}>
             <Ionicons name="search" size={30} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
 
-        {/* Display Suggestions */}
-        {searchQuery && suggestions.length > 0 && (
-          <FlatList
-            data={suggestions}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleSuggestionSelect(item)}>
-                <Text style={styles.suggestionItem}>{item}</Text>
-              </TouchableOpacity>
-            )}
-            style={styles.suggestionsList}
-          />
+        {isSearchVisible && (
+          <View style={styles.searchBar}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search Movies..."
+              placeholderTextColor="#ccc"
+              value={searchTerm}
+              onChangeText={setSearchTerm}
+              onSubmitEditing={handleSearch}
+            />
+          </View>
         )}
 
         <View style={styles.content}>
-          {slides.length > 0 && (
+          {loading ? (
+            <ActivityIndicator size="large" color="#FFFFFF" /> 
+          ) : searchResults.length > 0 ? (
+            <ScrollView>
+              {searchResults.map((movie) => (
+                <TouchableOpacity
+                  key={movie.id}
+                  onPress={
+                    () =>
+                      handleSlidePress(
+                        movie.videoUrl,
+                        movie.title,
+                        movie.description
+                      ) 
+                  }
+                >
+                  <View style={styles.movieCard}>
+                    <Text style={styles.movieTitle}>{movie.title}</Text>
+                    <Text>{movie.genre}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          ) : (
             <>
-              <SlideShow slides={slides} onSlidePress={handleSlidePress} />
-              <Recommendation />
-              <Action />
-              <Horror />
-              <Fantasy />
-              <Thriller />
-              <Drama />
+              {slides.length > 0 && (
+                <>
+                  <SlideShow slides={slides} onSlidePress={handleSlidePress} />
+                  <Recommendation />
+                  <Action />
+                  <Horror />
+                  <Fantasy />
+                  <Thriller />
+                  <Drama />
+                </>
+              )}
             </>
           )}
         </View>
 
-        {/* Video Modal */}
-        <Modal visible={modalVisible} onRequestClose={handleCloseModal} transparent={true}>
+        <Modal
+          visible={modalVisible}
+          onRequestClose={handleCloseModal}
+          transparent={true}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-              {Platform.OS !== 'web' && (
-                <Video
-                  source={{ uri: currentVideoUrl }}
-                  style={styles.videoPlayer}
-                  useNativeControls={true}
-                  resizeMode="cover"
-                  shouldPlay={!isPaused}
-                  onPlaybackStatusUpdate={(status) => {
-                    if (status.isPlaying !== !isPaused) {
-                      setIsPaused(status.isPlaying ? false : true);
-                    }
-                  }}
+              <TouchableOpacity
+                onPress={handleCloseModal}
+                style={styles.arrowButton}
+              >
+                <Ionicons name="arrow-back" size={19} color="#FFFFFF" />
+              </TouchableOpacity>
+              {videoLoading && (
+                <ActivityIndicator
+                  size="large"
+                  color="#FFFFFF"
+                  style={styles.loader}
                 />
               )}
-              <Text style={styles.videoStatusText}>{videoStatusText}</Text>
+              <Video
+                source={{ uri: currentVideoUrl }}
+                style={styles.videoPlayer}
+                useNativeControls={true}
+                resizeMode="cover"
+                shouldPlay={true}
+                onLoad={handleVideoLoad} // When the video is ready, hide the loading spinner
+              />
+              {!videoLoading && (
+                <>
+                  <Text style={styles.modalTitle}>{currentTitle}</Text>
+                  <Text style={styles.modalDescription}>
+                    {currentDescription}
+                  </Text>
+                </>
+              )}
             </View>
           </View>
         </Modal>
       </ScrollView>
-
-      {/* Sidebar component */}
-      <Sidebar isVisible={sidebarVisible} onClose={() => setSidebarVisible(false)} />
+      <Sidebar
+        isVisible={sidebarVisible}
+        onClose={() => setSidebarVisible(false)}
+      />
     </SafeAreaView>
   );
 };
@@ -202,73 +226,101 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
   },
+
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 15,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
     zIndex: 2,
   },
-  content: {
-    flex: 1,
-    backgroundColor: '#000000',
+
+  searchBar: {
+    padding: 10,
+    backgroundColor: "#1C1C1C",
   },
   searchInput: {
-    flex: 1,
-    fontSize: 18,
+    backgroundColor: "#333",
+    color: "#fff",
     padding: 10,
-    borderColor: '#CCCCCC',
-    borderWidth: 1,
     borderRadius: 5,
-    marginLeft: 10,
-    backgroundColor: '#FFFFFF',
-    color: '#000000',
   },
-  searchIconContainer: {
-    paddingLeft: 10,
+
+  content: {
+    flex: 1,
+    backgroundColor: "#000000",
   },
-  suggestionsList: {
-    backgroundColor: '#FFFFFF',
-    maxHeight: 200,
-    position: 'absolute',
-    top: 70,
-    left: 15,
-    right: 15,
-    zIndex: 1,
-  },
-  suggestionItem: {
+
+  movieCard: {
     padding: 10,
-    fontSize: 16,
-    color: '#000000',
+    marginBottom: 10,
+    backgroundColor: "#333",
+    borderRadius: 5,
   },
+
+  movieTitle: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#fff",
+  },
+
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.95)",
   },
+
   modalContent: {
-    width: '90%',
-    height: '80%',
-    backgroundColor: 'white',
+    width: "90%",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     padding: 10,
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
+
   videoPlayer: {
-    width: '100%',
-    height: '100%',
+    width: "105%",
+    height: 200,
+    borderRadius: 10,
   },
-  videoStatusText: {
-    position: 'absolute',
-    bottom: 20,
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
+
+  modalTitle: {
+    fontSize: 22,
+    fontFamily: "Roboto-Bold",
+    color: "#FFFFFF",
+    textAlign: "left",
+    marginVertical: 10,
+    width: "94%",
+  },
+
+  modalDescription: {
+    fontFamily: "Roboto-Medium",
+    fontSize: 16,
+    color: "#CCCCCC",
+    textAlign: "left",
+    marginVertical: 10,
+    width: "94%",
+  },
+
+  loader: {
+    position: "absolute", 
+    top: "50%", 
+    left: "50%", 
+    transform: [{ translateX: -25 }, { translateY: -25 }], 
+    zIndex: 1, 
+  },
+
+  arrowButton: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    padding: 10,
+    zIndex: 1,
   },
 });
 

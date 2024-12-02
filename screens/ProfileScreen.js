@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     marginBottom: 10,
     borderWidth: 2,
-    borderColor: '#6200ee',
+    borderColor: '#FF9500',
   },
   name: {
     fontSize: 24,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3a3a3a',
   },
   saveButton: {
-    backgroundColor: '#6200ee',
+    backgroundColor: '#FF9500',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
