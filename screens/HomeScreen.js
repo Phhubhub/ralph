@@ -8,7 +8,7 @@ import {
   Text,
   ScrollView,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import SlideShow from "../components/Slide";
@@ -19,8 +19,8 @@ import Fantasy from "../components/Fantasy";
 import Thriller from "../components/Thriller";
 import Drama from "../components/Drama";
 import Sidebar from "../components/SideBar";
-import { searchMovies } from "../components/searchService"; 
-import { Video } from "expo-av"; 
+import { searchMovies } from "../components/searchService";
+import { Video } from "expo-av";
 import { query, collection, orderBy, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
@@ -31,11 +31,12 @@ const HomeScreen = () => {
   const [currentVideoUrl, setCurrentVideoUrl] = useState("");
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDescription, setCurrentDescription] = useState("");
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const [searchResults, setSearchResults] = useState([]); 
-  const [isSearchVisible, setIsSearchVisible] = useState(false); 
-  const [loading, setLoading] = useState(false); 
-  const [videoLoading, setVideoLoading] = useState(true); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(true);
+  
 
   const fetchSlides = async () => {
     try {
@@ -56,12 +57,12 @@ const HomeScreen = () => {
   }, []);
 
   const handleSearch = async () => {
-    setLoading(true); 
+    setLoading(true);
     if (searchTerm.length > 0) {
-      const results = await searchMovies(searchTerm); 
+      const results = await searchMovies(searchTerm);
       setSearchResults(results);
     } else {
-      setSearchResults([]); 
+      setSearchResults([]);
     }
     setLoading(false);
   };
@@ -74,7 +75,6 @@ const HomeScreen = () => {
 
     setSearchTerm("");
     setSearchResults([]);
-    setIsSearchVisible(false); 
   };
 
   const handleCloseModal = () => {
@@ -82,11 +82,11 @@ const HomeScreen = () => {
     setCurrentVideoUrl("");
     setCurrentTitle("");
     setCurrentDescription("");
-    setVideoLoading(true); 
+    setVideoLoading(true);
   };
 
   const handleVideoLoad = () => {
-    setVideoLoading(false); 
+    setVideoLoading(false);
   };
 
   const toggleSidebar = () => {
@@ -94,11 +94,9 @@ const HomeScreen = () => {
   };
 
   const toggleSearch = () => {
-    if (isSearchVisible) {
-      setSearchTerm("");
-      setSearchResults([]);
-    }
     setIsSearchVisible((prev) => !prev);
+    setSearchTerm("");
+    setSearchResults([]);
   };
 
   return (
@@ -116,13 +114,7 @@ const HomeScreen = () => {
             )}
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={toggleSearch}>
-            <Ionicons name="search" size={30} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
-
-        {isSearchVisible && (
-          <View style={styles.searchBar}>
+          {isSearchVisible && (
             <TextInput
               style={styles.searchInput}
               placeholder="Search Movies..."
@@ -131,24 +123,23 @@ const HomeScreen = () => {
               onChangeText={setSearchTerm}
               onSubmitEditing={handleSearch}
             />
-          </View>
-        )}
+          )}
+
+          <TouchableOpacity onPress={toggleSearch} style={styles.searchIcon}>
+            <Ionicons name="search" size={30} color="#FFFFFF" />
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.content}>
           {loading ? (
-            <ActivityIndicator size="large" color="#FFFFFF" /> 
+            <ActivityIndicator size="large" color="#FFFFFF" />
           ) : searchResults.length > 0 ? (
             <ScrollView>
               {searchResults.map((movie) => (
                 <TouchableOpacity
                   key={movie.id}
-                  onPress={
-                    () =>
-                      handleSlidePress(
-                        movie.videoUrl,
-                        movie.title,
-                        movie.description
-                      ) 
+                  onPress={() =>
+                    handleSlidePress(movie.videoUrl, movie.title, movie.description)
                   }
                 >
                   <View style={styles.movieCard}>
@@ -201,7 +192,7 @@ const HomeScreen = () => {
                 useNativeControls={true}
                 resizeMode="cover"
                 shouldPlay={true}
-                onLoad={handleVideoLoad} // When the video is ready, hide the loading spinner
+                onLoad={handleVideoLoad}
               />
               {!videoLoading && (
                 <>
@@ -231,22 +222,25 @@ const styles = StyleSheet.create({
 
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    justifyContent: "space-between", // Ensures proper spacing
     padding: 15,
     backgroundColor: "#000000",
     zIndex: 2,
   },
-
-  searchBar: {
-    padding: 10,
-    backgroundColor: "#1C1C1C",
-  },
+  
   searchInput: {
+    flex: 1, // Allow the input to take available space
     backgroundColor: "#333",
     color: "#fff",
     padding: 10,
     borderRadius: 5,
+    marginLeft: 10,
+  },
+
+  searchIcon: {
+    marginLeft: 10,
+    
   },
 
   content: {
@@ -308,11 +302,11 @@ const styles = StyleSheet.create({
   },
 
   loader: {
-    position: "absolute", 
-    top: "50%", 
-    left: "50%", 
-    transform: [{ translateX: -25 }, { translateY: -25 }], 
-    zIndex: 1, 
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: -25 }, { translateY: -25 }],
+    zIndex: 1,
   },
 
   arrowButton: {

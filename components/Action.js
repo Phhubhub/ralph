@@ -81,7 +81,20 @@ const Action = () => {
       off(playPauseRef, "value", listener); // Correct cleanup
     };
   }, []);
-  
+  const handleSlidePress = (videoUrl, title, description) => {
+    if (videoUrl) {
+      setCurrentVideoUrl(videoUrl);
+      setCurrentTitle(title);
+      setCurrentDescription(description);
+      setModalVisible(true);
+      setIsLoading(true); // Show loading spinner when video is about to load
+
+      // Start the video when modal opens
+      if (videoRef.current && playPauseState) {
+        videoRef.current.playAsync(); // Play immediately if state is set to play
+      }
+    }
+  };
 
   const handleCloseModal = () => {
     setModalVisible(false);
